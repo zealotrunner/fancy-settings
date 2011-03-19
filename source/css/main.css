@@ -1,0 +1,82 @@
+#sidebar {
+    position: absolute;
+    background-image: -webkit-gradient(
+        linear,
+        left top,
+        left 500,
+        color-stop(0, #EAEEF3),
+        color-stop(1, #F2F6FA)
+    );
+    width: 219px;
+    height: 100%;
+    top: 0;
+    left: 0;
+    border-right: 1px solid #C6C9CE;
+    box-shadow: inset -8px 0 30px -30px black;
+}
+
+#sidebar h1 {
+    position: absolute;
+    top: 13px;
+    right: 25px;
+    font-size: 26px;
+    color: #53637D;
+}
+
+#tab-container {
+    position: absolute;
+    width: 100%;
+    top: 50px;
+    bottom: 0;
+    overflow-y: auto;
+    text-align: right;
+}
+
+#tab-container .tab {
+    height: 30px;
+    padding-right: 25px;
+    border: 1px solid transparent;
+    border-left: none !important;
+    border-right: none !important;
+    font-size: 13px;
+    line-height: 30px;
+    color: #426DC9;
+    cursor: pointer;
+}
+
+#tab-container .tab.selected {
+    background-color: #BBCEE9;
+    border: 1px solid #8FAAD9;
+    color: black;
+    text-shadow: none;
+    box-shadow: inset -12px 0 30px -30px black;
+}
+
+#search-container {
+    margin: 5px;
+    margin-left: 0;
+    margin-right: 0;
+    padding-right: 23px !important;
+    cursor: default !important;
+}
+
+#search-container input[type=search] {
+    width: 130px;
+    -webkit-user-select: auto;
+    -webkit-user-drag: auto;
+}
+
+#search-container input[type=search]:focus {
+    outline: auto;
+    cursor: auto;
+    -webkit-user-select: auto;
+    -webkit-user-drag: auto;
+}
+
+#content {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 220px;
+    right: 0;
+}
