@@ -1,13 +1,28 @@
 (function () {
     this.FancySettings = new Class({
-        "initialize": function (attr) {
+        "aTabHasBeenCreated": false,
+        
+        "initialize": function (name) {
             // Set the page title
-            document.title = attr.name;
+            document.title = name;
             
+            // Initialize the search
+            //TBI
             
-            //var tab = new TabCreator($("tab-container"), $("content"));
-            //tab.create();
-            //tab.create();
+            // Initialize the tab creator
+            this.tab = new TabCreator($("tab-container"), $("content"));
+        },
+        
+        "createTab": function (name) {
+            var tabSystem = this.tab.create();
+            tabSystem.tab.set("text", name);
+            
+            if (!this.aTabHasBeenCreated) {
+                this.tab.select(tabSystem.tab);
+                this.aTabHasBeenCreated = true;
+            }
+            
+            return tabSystem.content;
         }
     });
 })();
