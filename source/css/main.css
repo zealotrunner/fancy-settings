@@ -15,6 +15,12 @@
     box-shadow: inset -8px 0 30px -30px black;
 }
 
+#sidebar img {
+    position: absolute;
+    top: 12px;
+    left: 12px;
+}
+
 #sidebar h1 {
     position: absolute;
     top: 13px;
@@ -57,20 +63,14 @@
     margin-left: 0;
     margin-right: 0;
     padding-right: 23px !important;
-    cursor: default !important;
 }
 
 #search-container input[type=search] {
     width: 130px;
-    -webkit-user-select: auto;
-    -webkit-user-drag: auto;
 }
 
 #search-container input[type=search]:focus {
     outline: auto;
-    cursor: auto;
-    -webkit-user-select: auto;
-    -webkit-user-drag: auto;
 }
 
 #content {

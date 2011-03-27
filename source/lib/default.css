@@ -281,9 +281,12 @@ caption {
     text-shadow: black 0 -1px 0;
 }
 
-.no-select, .no-select * {
-    cursor: default;
+.no-select {
     -webkit-user-select: none;
+    cursor: default;
+}
+
+img.no-select, .no-select img {
     -webkit-user-drag: none;
 }
 
