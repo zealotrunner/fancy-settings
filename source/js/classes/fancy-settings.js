@@ -1,7 +1,5 @@
 (function () {
     this.FancySettings = new Class({
-        "aTabHasBeenCreated": false,
-        
         "initialize": function (name) {
             // Set the page title
             document.title = name;
@@ -25,4 +23,8 @@
             return tabSystem.content;
         }
     });
+    
+    this.FancySettings.__proto__.initWithManifest = function (name) {
+        console.log("i would do something...");
+    };
 })();

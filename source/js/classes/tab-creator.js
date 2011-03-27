@@ -1,7 +1,5 @@
 (function () {
     this.TabCreator = new Class({
-        "selected": null,
-        
         "initialize": function (tabContainer, contentContainer) {
             if (typeOf(tabContainer) !== "element" || typeOf(contentContainer) !== "element") {
                 throw "containerNotAnElement";
@@ -47,7 +45,7 @@
                 this.selected.removeClass("selected");
                 this.selected.retrieve("content").removeClass("show");
                 
-                this.selected = null;
+                delete this.selected;
             }
         }
     });
