@@ -1,5 +1,5 @@
 (function () {
-    var TabSystem = new Class({
+    var Bundle = new Class({
         "creator": null,
         "activated": false,
         "tab": null,
@@ -29,17 +29,17 @@
                 return;
             }
             
-            // Deactivate the currently activated Tab System
-            if (this.creator.activatedTabSystem) {
-                this.creator.activatedTabSystem.deactivate();
+            // Deactivate the currently activated Bundle
+            if (this.creator.activatedBundle) {
+                this.creator.activatedBundle.deactivate();
             }
             
             // Activate us
             this.tab.addClass("selected");
             this.content.addClass("show");
             
-            // Tell our Creator that we're the activated Tab System
-            this.creator.activatedTabSystem = this;
+            // Tell our Creator that we're the activated Bundle
+            this.creator.activatedBundle = this;
             
             this.activated = true;
         },
@@ -58,8 +58,8 @@
         }
     });
     
-    this.TabSystemCreator = new Class({
-        "activatedTabSystem": null,
+    this.Tab = new Class({
+        "activatedBundle": null,
         
         "initialize": function (tabContainer, contentContainer) {
             // Check Containers
@@ -71,20 +71,20 @@
             this.contentContainer = contentContainer;
         },
         
-        "create": function () {
-            // Create a new Tab System
-            var tabSystem = new TabSystem(this);
+        "new": function () {
+            // Create a new Bundle
+            var bundle = new Bundle(this);
             
-            // Inject the Tab System into the DOM
-            tabSystem.tab.inject(this.tabContainer);
-            tabSystem.content.inject(this.contentContainer);
+            // Inject the Bundle into the DOM
+            bundle.tab.inject(this.tabContainer);
+            bundle.content.inject(this.contentContainer);
             
-            // Activate the Tab System if it's the first created
-            if (!this.activatedTabSystem) {
-                tabSystem.activate();
+            // Activate the Bundle if it's the first created
+            if (!this.activatedBundle) {
+                bundle.activate();
             }
             
-            return tabSystem;
+            return bundle;
         }
     });
 }());
