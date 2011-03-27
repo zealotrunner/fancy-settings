@@ -8,17 +8,15 @@
             //TBI
             
             // Initialize the tab creator
-            this.tab = new TabCreator($("tab-container"), $("content"));
+            this.tab = new TabSystemCreator($("tab-container"), $("content"));
         },
         
         "createTab": function (name) {
             var tabSystem = this.tab.create();
+            
             tabSystem.tab.set("text", name);
             
-            if (!this.aTabHasBeenCreated) {
-                this.tab.select(tabSystem.tab);
-                this.aTabHasBeenCreated = true;
-            }
+            
             
             return tabSystem.content;
         }
