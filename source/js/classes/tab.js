@@ -1,7 +1,7 @@
 (function () {
     var Bundle = new Class({
         "creator": null,
-        "activated": false,
+        "active": false,
         "tab": null,
         "content": null,
         
@@ -24,29 +24,29 @@
         },
         
         "activate": function () {
-            // Check if we're already activated
-            if (this.activated) {
+            // Check if we're already active
+            if (this.active) {
                 return;
             }
             
-            // Deactivate the currently activated Bundle
-            if (this.creator.activatedBundle) {
-                this.creator.activatedBundle.deactivate();
+            // Deactivate the currently active Bundle
+            if (this.creator.activeBundle) {
+                this.creator.activeBundle.deactivate();
             }
             
             // Activate us
             this.tab.addClass("selected");
             this.content.addClass("show");
             
-            // Tell our Creator that we're the activated Bundle
-            this.creator.activatedBundle = this;
+            // Tell our Creator that we're the active Bundle
+            this.creator.activeBundle = this;
             
-            this.activated = true;
+            this.active = true;
         },
         
         "deactivate": function () {
-            // Check if we're already deactivated
-            if (!this.activated) {
+            // Check if we're already unactive
+            if (!this.active) {
                 return;
             }
             
@@ -54,12 +54,12 @@
             this.tab.removeClass("selected");
             this.content.removeClass("show");
             
-            this.activated = false;
+            this.active = false;
         }
     });
     
     this.Tab = new Class({
-        "activatedBundle": null,
+        "activeBundle": null,
         
         "initialize": function (tabContainer, contentContainer) {
             // Check Containers
@@ -80,7 +80,7 @@
             bundle.content.inject(this.contentContainer);
             
             // Activate the Bundle if it's the first created
-            if (!this.activatedBundle) {
+            if (!this.activeBundle) {
                 bundle.activate();
             }
             
