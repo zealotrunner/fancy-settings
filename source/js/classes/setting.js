@@ -273,6 +273,86 @@
         }
     });
     
+    Bundle.Slider = new Class({
+        // name, label, action(change), max, min, step
+        "initialize": function (params) {
+            this.params = (typeOf(params) === "object") ? params : {};
+            
+            this.createDOM();
+            this.setupDOM();
+            this.addEvents();
+            
+            if (typeOf(this.params.name) === "string" && this.params.name !== "") {
+                this.set(settings[this.params.name]);
+            }
+            
+            return this.bundle;
+        },
+        
+        "createDOM": function () {
+            this.bundle = new Element("div", {
+                "class": "setting bundle slider"
+            });
+            
+            this.container = new Element("div", {
+                "class": "setting container slider"
+            });
+            
+            this.element = new Element("input", {
+                "class": "setting element slider",
+                "type": "range"
+            });
+            
+            this.label = new Element("label", {
+                "class": "setting label slider"
+            });
+        },
+        
+        "setupDOM": function () {
+            if (typeOf(this.params.label) === "string") {
+                this.label.set("text", this.params.label);
+                this.label.inject(this.container);
+            }
+            
+            if (typeOf(this.params.max) === "string") {
+                this.element.set("max", this.params.max);
+            }
+            if (typeOf(this.params.min) === "string") {
+                this.element.set("min", this.params.min);
+            }
+            if (typeOf(this.params.step) === "string") {
+                this.element.set("step", this.params.step);
+            }
+            this.element.inject(this.container);
+            
+            this.container.inject(this.bundle);
+        },
+        
+        "addEvents": function () {
+            this.element.addEvent("change", (function (event) {
+                if (typeOf(this.params.name) === "string" && this.params.name !== "") {
+                    settings[this.params.name] = this.get();
+                    settings.save();
+                }
+                
+                if (typeOf(this.params.action) === "function") {
+                    this.params.action(this.get());
+                }
+            }).bind(this));
+        },
+        
+        "get": function () {
+            return this.element.get("value");
+        },
+        
+        "set": function (value) {
+            value = (typeOf(value) === "string") ? value : "";
+            this.element.set("value", value);
+            return this;
+        }
+    });
+    
+    
     
     
     
@@ -288,12 +368,8 @@
     
     window.addEvent("domready", function () {
         console.log("ok");
-        (new Bundle.Checkbox({
-            "name": "tests",
-            "label": "foobar aktivieren",
-            "action": function (t) {
-                alert("das ist" + t)
-            }
+        (new Bundle.Slider({
+            
         })).inject($("content"));
     });
     
