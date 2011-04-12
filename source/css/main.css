@@ -80,3 +80,7 @@
     left: 220px;
     right: 0;
 }
+
+.tab-content {
+    display: none;
+}
