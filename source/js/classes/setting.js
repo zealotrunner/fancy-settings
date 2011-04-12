@@ -429,6 +429,21 @@
         }
     });
     
+    Bundle.ListBox = new Class({
+        "Extends": Bundle.PopupButton,
+        
+        "setupDOM": function () {
+            this.element.set("size", "2");
+            
+            if (typeOf(this.params.label) === "string") {
+                this.label.set("text", this.params.label);
+                this.label.inject(this.container);
+            }
+            this.element.inject(this.container);
+            this.container.inject(this.bundle);
+        }
+    });
+    
     
     
     
@@ -448,16 +463,16 @@
     
     window.addEvent("domready", function () {
         
-        (new Bundle.PopupButton({
+        (new Bundle.ListBox({
             "options": [
                 {
                     "value": "test1",
                     "text": "Erster Test"
-                },
-                
-                {
-                    "value": "test2"
-                }
+                }    ,
+
+                    {
+                        "value": "test2"
+                    }  
             ],
             
             "label": "wähle dein lieblingsteil: ",
