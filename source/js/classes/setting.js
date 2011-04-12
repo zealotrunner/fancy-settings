@@ -555,42 +555,6 @@
         }
     });
     
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    return;
     this.Setting = new Class({
         "initialize": function (container) {
             // Check Container
@@ -601,36 +565,24 @@
             this.container = container;
         },
         
-        "new": function (id, type, params) {
-            switch (type) {
-                case "button":
-                    //
-                    break;
-                case "textfield": // param password
-                    //
-                    break;
-                case "checkbox":
-                    //
-                    break;
-                case "slider":
-                    //
-                    break;
-                case "popupButton":
-                    //
-                    break;
-                case "listBox":
-                    //
-                    break;
-                case "radioButtons":
-                    //
-                    break;
-                case "group":
-                    //
-                    break;
-                case "separator":
-                    //
-                    break;
+        "new": function (type, params) {
+            var types = {
+                "group": "Group",
+                "description": "Description",
+                "button": "Button",
+                "text": "Text",
+                "checkbox": "Checkbox",
+                "slider": "Slider",
+                "popupButton": "PopupButton",
+                "listBox": "ListBox",
+                "radioButtons": "RadioButtons"
+            };
+            
+            if (!Object.keys(types).contains(type)) {
+                throw "invalidType";
             }
+            
+            return (new Bundle[types[type]](params)).inject(this.container);
         }
     });
 }());
