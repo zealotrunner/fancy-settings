@@ -231,7 +231,8 @@
             this.element = new Element("input", {
                 "id": String.uniqueID(),
                 "class": "setting element checkbox",
-                "type": "checkbox"
+                "type": "checkbox",
+                "value": "true"
             });
             
             this.label = new Element("label", {
@@ -432,15 +433,125 @@
     Bundle.ListBox = new Class({
         "Extends": Bundle.PopupButton,
         
-        "setupDOM": function () {
-            this.element.set("size", "2");
+        "createDOM": function () {
+            this.bundle = new Element("div", {
+                "class": "setting bundle list-box"
+            });
             
+            this.container = new Element("div", {
+                "class": "setting container list-box"
+            });
+            
+            this.element = new Element("select", {
+                "class": "setting element list-box",
+                "size": "2"
+            });
+            
+            this.label = new Element("label", {
+                "class": "setting label list-box"
+            });
+            
+            this.params.options.each((function (option) {
+                option = (typeOf(option) === "object") ? option : {};
+                
+                (new Element("option", {
+                    "value": option.value,
+                    "text": option.text || option.value
+                })).inject(this.element);
+            }).bind(this));
+        }
+    });
+    
+    Bundle.RadioButtons = new Class({
+        // name, label, action(change), options[{value, text}]
+        "initialize": function (params) {
+            this.params = (typeOf(params) === "object") ? params : {};
+            this.params.options = (typeOf(this.params.options) === "array") ? this.params.options : [];
+            
+            this.createDOM();
+            this.setupDOM();
+            this.addEvents();
+            
+            if (typeOf(this.params.name) === "string" && this.params.name !== "") {
+                this.set(settings[this.params.name]);
+            }
+            
+            return this.bundle;
+        },
+        
+        "createDOM": function () {
+            this.bundle = new Element("form", {
+                "class": "setting bundle radio-buttons"
+            });
+            
+            this.label = new Element("label", {
+                "class": "setting label radio-buttons"
+            });
+            
+            this.elements = [];
+            
+            var settingID = String.uniqueID();
+            this.params.options.each((function (option) {
+                option = (typeOf(option) === "object") ? option : {};
+                var id = String.uniqueID();
+                
+                var container = (new Element("div", {
+                    "class": "setting container radio-buttons"
+                })).inject(this.bundle);
+                
+                this.elements.push((new Element("input", {
+                    "id": id,
+                    "name": settingID,
+                    "class": "setting element radio-buttons",
+                    "type": "radio",
+                    "value": option.value
+                })).inject(container));
+                
+                (new Element("label", {
+                    "class": "setting element label radio-buttons",
+                    "for": id,
+                    "text": option.text || option.value
+                })).inject(container);
+            }).bind(this));
+        },
+        
+        "setupDOM": function () {
             if (typeOf(this.params.label) === "string") {
                 this.label.set("text", this.params.label);
-                this.label.inject(this.container);
+                this.label.inject(this.bundle, "top");
             }
-            this.element.inject(this.container);
-            this.container.inject(this.bundle);
+        },
+        
+        "addEvents": function () {
+            this.bundle.addEvent("change", (function (event) {
+                if (typeOf(this.params.name) === "string" && this.params.name !== "") {
+                    settings[this.params.name] = this.get();
+                    settings.save();
+                }
+                
+                if (typeOf(this.params.action) === "function") {
+                    this.params.action(this.get());
+                }
+            }).bind(this));
+        },
+        
+        "get": function () {
+            var checkedEl = this.elements.filter((function (el) {
+                return el.get("checked");
+            }).bind(this));
+            
+            return checkedEl[0] && checkedEl[0].get("value");
+        },
+        
+        "set": function (value) {
+            value = (typeOf(value) === "string") ? value : "";
+            
+            var desiredEl = this.elements.filter((function (el) {
+                return (el.get("value") === value);
+            }).bind(this));
+            desiredEl[0] && desiredEl[0].set("checked", true);
+            
+            return this;
         }
     });
     
@@ -451,34 +562,6 @@
     
     
     
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    window.addEvent("domready", function () {
-        
-        (new Bundle.ListBox({
-            "options": [
-                {
-                    "value": "test1",
-                    "text": "Erster Test"
-                }    ,
-
-                    {
-                        "value": "test2"
-                    }  
-            ],
-            
-            "label": "wähle dein lieblingsteil: ",
-            "name": "hahaha"
-        })).inject($("content"));
-    });
     
     
     
