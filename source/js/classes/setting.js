@@ -1,96 +1,217 @@
 (function () {
-    var Bundle = new Class({
+    var settings = Store("settings");
+    var Bundle = {};
+    
+    Bundle.Group = new Class({
+        // label
         "initialize": function (params) {
             this.params = (typeOf(params) === "object") ? params : {};
             
-            this.createElements();
-            this.setupElements();
-            this.assembleElements();
-            this.createEvents();
+            this.createDOM();
+            this.setupDOM();
             
             return this.bundle;
         },
         
-        "createElements": function () {
+        "createDOM": function () {
             this.bundle = new Element("div", {
-                "class": "setting bundle general"
+                "class": "setting bundle group"
             });
             
             this.container = new Element("div", {
-                "class": "setting container general"
+                "class": "setting container group"
             });
             
-            this.element = new Element("div", {
-                "id": String.uniqueID(),
-                "class": "setting element general"
-            });
-            
-            this.label = new Element("label", {
-                "class": "setting label general",
-                "for": this.element.get("id")
+            this.element = new Element("h2", {
+                "class": "setting element group"
             });
         },
         
-        "setupElements": function () {
-            
-        },
-        
-        "assembleElements": function () {
+        "setupDOM": function () {
+            if (typeOf(this.params.label) === "string") {
+                this.element.set("text", this.params.label);
+            }
             this.element.inject(this.container);
-            this.label.inject(this.container);
             this.container.inject(this.bundle);
+        }
+    });
+    
+    Bundle.Description = new Class({
+        // text
+        "initialize": function (params) {
+            this.params = (typeOf(params) === "object") ? params : {};
+            
+            this.createDOM();
+            this.setupDOM();
+            
+            return this.bundle;
         },
         
-        "createEvents": function () {
-            this.element.addEvent("change", function () {
-                
+        "createDOM": function () {
+            this.bundle = new Element("div", {
+                "class": "setting bundle description"
+            });
+            
+            this.container = new Element("div", {
+                "class": "setting container description"
+            });
+            
+            this.element = new Element("p", {
+                "class": "setting element description"
             });
         },
         
-        "get": function () {
-            return false;
-        },
-        
-        "set": function () {
-            return this;
+        "setupDOM": function () {
+            if (typeOf(this.params.text) === "string") {
+                this.element.set("text", this.params.text);
+            }
+            this.element.inject(this.container);
+            this.container.inject(this.bundle);
         }
     });
     
     Bundle.Button = new Class({
-        "Extends": Bundle
+        // label, text, action(click)
+        "initialize": function (params) {
+            this.params = (typeOf(params) === "object") ? params : {};
+            
+            this.createDOM();
+            this.setupDOM();
+            this.addEvents();
+            
+            return this.bundle;
+        },
+        
+        "createDOM": function () {
+            this.bundle = new Element("div", {
+                "class": "setting bundle button"
+            });
+            
+            this.container = new Element("div", {
+                "class": "setting container button"
+            });
+            
+            this.element = new Element("button", {
+                "class": "setting element button",
+                "type": "button"
+            });
+            
+            this.label = new Element("label", {
+                "class": "setting label button"
+            });
+        },
+        
+        "setupDOM": function () {
+            if (typeOf(this.params.label) === "string") {
+                this.label.set("text", this.params.label);
+                this.label.inject(this.container);
+            }
+            
+            if (typeOf(this.params.text) === "string") {
+                this.element.set("text", this.params.text);
+            }
+            this.element.inject(this.container);
+            
+            this.container.inject(this.bundle);
+        },
+        
+        "addEvents": function () {
+            if (typeOf(this.params.action) === "function") {
+                this.element.addEvent("click", (function () {
+                    this.params.action();
+                }).bind(this));
+            }
+        }
     });
     
     Bundle.Text = new Class({
-        "Extends": Bundle
+        // name, label, text, action(change), masked
+        "initialize": function (params) {
+            this.params = (typeOf(params) === "object") ? params : {};
+            
+            this.createDOM();
+            this.setupDOM();
+            this.addEvents();
+            
+            if (typeOf(this.params.name) === "string" && this.params.name !== "" && settings[this.params.name] !== undefined) {
+                this.set(settings[this.params.name]);
+            }
+            
+            return this.bundle;
+        },
+        
+        "createDOM": function () {
+            this.bundle = new Element("div", {
+                "class": "setting bundle text"
+            });
+            
+            this.container = new Element("div", {
+                "class": "setting container text"
+            });
+            
+            this.element = new Element("input", {
+                "class": "setting element text",
+                "type": "text"
+            });
+            
+            this.label = new Element("label", {
+                "class": "setting label text"
+            });
+        },
+        
+        "setupDOM": function () {
+            if (typeOf(this.params.label) === "string") {
+                this.label.set("text", this.params.label);
+                this.label.inject(this.container);
+            }
+            
+            if (typeOf(this.params.text) === "string") {
+                this.element.set("placeholder", this.params.text);
+            }
+            if (this.params.masked === true) {
+                this.element.set("type", "password");
+            }
+            this.element.inject(this.container);
+            
+            this.container.inject(this.bundle);
+        },
+        
+        "addEvents": function () {
+            var change = (function (event) {
+                if (typeOf(this.params.name) === "string" && this.params.name !== "") {
+                    settings[this.params.name] = this.get();
+                    settings.save();
+                }
+                
+                if (typeOf(this.params.action) === "function") {
+                    this.params.action(this.get());
+                }
+            }).bind(this);
+            
+            this.element.addEvent("change", change);
+            this.element.addEvent("keyup", change);
+        },
+        
+        "get": function () {
+            return this.element.get("value");
+        },
+        
+        "set": function (value) {
+            value = (typeOf(value) === "string") ? value : "";
+            this.element.set("value", value);
+            return this;
+        }
     });
     
-    Bundle.Checkbox = new Class({
-        "Extends": Bundle
-    });
     
-    Bundle.Slider = new Class({
-        "Extends": Bundle
-    });
     
-    Bundle.PopupButton = new Class({
-        "Extends": Bundle
-    });
     
-    Bundle.ListBox = new Class({
-        "Extends": Bundle
-    });
     
-    Bundle.RadioButtons = new Class({
-        "Extends": Bundle
-    });
     
-    Bundle.Group = new Class({
-        "Extends": Bundle
-    });
     
-    Bundle.Description = new Class({
-        "Extends": Bundle
-    });
+    
+    
+    
     
     
     
@@ -100,13 +221,40 @@
     
     window.addEvent("domready", function () {
         console.log("ok");
-        (new Bundle.Button("",{
-            "text": "Ausführen",
+        (new Bundle.Text({
+            "label": "hier klicken zum glücklich werden:",
+            "text": "ok",
             "action": function () {
-                alert("ok");
+                alert("is gut");
             }
         })).inject($("content"));
     });
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
     
     
     return;
