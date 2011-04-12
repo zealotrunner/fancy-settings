@@ -133,7 +133,7 @@
             this.setupDOM();
             this.addEvents();
             
-            if (typeOf(this.params.name) === "string" && this.params.name !== "" && settings[this.params.name] !== undefined) {
+            if (typeOf(this.params.name) === "string" && this.params.name !== "") {
                 this.set(settings[this.params.name]);
             }
             
@@ -203,8 +203,75 @@
         }
     });
     
-    
-    
+    Bundle.Checkbox = new Class({
+        // name, label, action(change)
+        "initialize": function (params) {
+            this.params = (typeOf(params) === "object") ? params : {};
+            
+            this.createDOM();
+            this.setupDOM();
+            this.addEvents();
+            
+            if (typeOf(this.params.name) === "string" && this.params.name !== "") {
+                this.set(settings[this.params.name]);
+            }
+            
+            return this.bundle;
+        },
+        
+        "createDOM": function () {
+            this.bundle = new Element("div", {
+                "class": "setting bundle checkbox"
+            });
+            
+            this.container = new Element("div", {
+                "class": "setting container checkbox"
+            });
+            
+            this.element = new Element("input", {
+                "id": String.uniqueID(),
+                "class": "setting element checkbox",
+                "type": "checkbox"
+            });
+            
+            this.label = new Element("label", {
+                "class": "setting label checkbox",
+                "for": this.element.get("id")
+            });
+        },
+        
+        "setupDOM": function () {
+            this.element.inject(this.container);
+            if (typeOf(this.params.label) === "string") {
+                this.label.set("text", this.params.label);
+                this.label.inject(this.container);
+            }
+            this.container.inject(this.bundle);
+        },
+        
+        "addEvents": function () {
+            this.element.addEvent("change", (function (event) {
+                if (typeOf(this.params.name) === "string" && this.params.name !== "") {
+                    settings[this.params.name] = this.get();
+                    settings.save();
+                }
+                
+                if (typeOf(this.params.action) === "function") {
+                    this.params.action(this.get());
+                }
+            }).bind(this));
+        },
+        
+        "get": function () {
+            return this.element.get("checked");
+        },
+        
+        "set": function (value) {
+            value = (typeOf(value) === "boolean") ? value : false;
+            this.element.set("checked", value);
+            return this;
+        }
+    });
     
     
     
@@ -221,11 +288,11 @@
     
     window.addEvent("domready", function () {
         console.log("ok");
-        (new Bundle.Text({
-            "label": "hier klicken zum glücklich werden:",
-            "text": "ok",
-            "action": function () {
-                alert("is gut");
+        (new Bundle.Checkbox({
+            "name": "tests",
+            "label": "foobar aktivieren",
+            "action": function (t) {
+                alert("das ist" + t)
             }
         })).inject($("content"));
     });
