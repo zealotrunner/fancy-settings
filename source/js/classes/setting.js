@@ -352,6 +352,86 @@
         }
     });
     
+    Bundle.PopupButton = new Class({
+        // name, label, action(change), options[{value, text}]
+        "initialize": function (params) {
+            this.params = (typeOf(params) === "object") ? params : {};
+            this.params.options = (typeOf(this.params.options) === "array") ? this.params.options : [];
+            
+            this.createDOM();
+            this.setupDOM();
+            this.addEvents();
+            
+            if (typeOf(this.params.name) === "string" && this.params.name !== "") {
+                this.set(settings[this.params.name]);
+            }
+            
+            return this.bundle;
+        },
+        
+        "createDOM": function () {
+            this.bundle = new Element("div", {
+                "class": "setting bundle popup-button"
+            });
+            
+            this.container = new Element("div", {
+                "class": "setting container popup-button"
+            });
+            
+            this.element = new Element("select", {
+                "class": "setting element popup-button"
+            });
+            
+            this.label = new Element("label", {
+                "class": "setting label popup-button"
+            });
+            
+            this.params.options.each((function (option) {
+                option = (typeOf(option) === "object") ? option : {};
+                
+                (new Element("option", {
+                    "value": option.value,
+                    "text": option.text || option.value
+                })).inject(this.element);
+            }).bind(this));
+        },
+        
+        "setupDOM": function () {
+            if (typeOf(this.params.label) === "string") {
+                this.label.set("text", this.params.label);
+                this.label.inject(this.container);
+            }
+            this.element.inject(this.container);
+            this.container.inject(this.bundle);
+        },
+        
+        "addEvents": function () {
+            this.element.addEvent("change", (function (event) {
+                if (typeOf(this.params.name) === "string" && this.params.name !== "") {
+                    settings[this.params.name] = this.get();
+                    settings.save();
+                }
+                
+                if (typeOf(this.params.action) === "function") {
+                    this.params.action(this.get());
+                }
+            }).bind(this));
+        },
+        
+        "get": function () {
+            return this.element.get("value");
+        },
+        
+        "set": function (value) {
+            value = (typeOf(value) === "string") ? value : "";
+            this.element.set("value", value);
+            return this;
+        }
+    });
+    
+    
+    
+    
     
     
     
@@ -367,9 +447,21 @@
     
     
     window.addEvent("domready", function () {
-        console.log("ok");
-        (new Bundle.Slider({
+        
+        (new Bundle.PopupButton({
+            "options": [
+                {
+                    "value": "test1",
+                    "text": "Erster Test"
+                },
+                
+                {
+                    "value": "test2"
+                }
+            ],
             
+            "label": "wähle dein lieblingsteil: ",
+            "name": "hahaha"
         })).inject($("content"));
     });
     
