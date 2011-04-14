@@ -38,39 +38,29 @@
             
             // Create Group if it doesn't exist already
             if (tab.groups[group] === undefined) {
-                tab.groups[group] = (new Element("div", {
+                tab.groups[group] = {};
+                
+                tab.groups[group].content = (new Element("table", {
                     "class": "setting group"
                 })).inject(tab.content);
                 
-                (new Element("div", {
+                var row = (new Element("tr")).inject(tab.groups[group].content);
+                
+                (new Element("td", {
                     "class": "setting group-name",
                     "text": group
-                })).inject(tab.groups[group]);
+                })).inject(row);
                 
-                (new Element("div", {
-                    "class": "setting group-content",
-                    "text": "test2"
-                })).inject(tab.groups[group]);
+                var content = (new Element("td", {
+                    "class": "setting group-content"
+                })).inject(row);
                 
-                this.tabs[tab].content = this.tab.create();
-                this.tabs[tab].content.tab.set("text", tab);
-                
-                this.tabs[tab].content = this.tabs[tab].content.content;
-                (new Element("h2", {
-                    "text": tab
-                })).inject(this.tabs[tab].content);
+                tab.groups[group].setting = new Setting(content);
             }
-            tab = this.tabs[tab];
-            
-            
-            
-            
-            this.tabs[tab].setting = new Setting(this.tabs[tab].content);
-            
-            
+            group = tab.groups[group];
             
             // Create the Setting
-            return tab.setting.create(type, params);
+            return group.setting.create(type, params);
         }
     });
     

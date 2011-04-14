@@ -1,6 +1,5 @@
 .tab-content h2 {
     margin: 0;
-    padding-top: 1px;
     padding-bottom: 5px;
     font-size: 26px;
     color: #707070;
@@ -15,15 +14,14 @@
 
 .setting.group-name {
     width: 130px;
-    display: inline-block;
-    font-size: 15px;
+    padding-left: 3px;
+    font-size: 14px;
     font-weight: bold;
+    vertical-align: top;
 }
 
 .setting.group-content {
-    display: inline-block;
 }
 
 .setting.bundle {
-    border-bottom: 1px solid #EEEEEE;
 }
