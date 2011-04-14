@@ -35,8 +35,17 @@
     font-weight: normal;
 }
 
-.setting.label.checkbox {
+.setting.label.checkbox, .setting.element.label.radio-buttons {
     margin-left: 5px;
+}
+
+.setting.element.label.radio-buttons {
+    position: relative;
+    top: -1px;
+}
+
+.setting.label.radio-buttons + .setting.container.radio-buttons {
+    margin-top: 3px;
 }
 
 .setting.element.description {
