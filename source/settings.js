@@ -1,59 +1,77 @@
 window.addEvent("domready", function () {
     var settings = new FancySettings("GMail Counter");
-    settings.new("General", "group", {
-        "label": "Google Apps"
+    settings.create("General", "Behaviour", "group", {
+        "label": "Schmutzabweisende Jacken"
     });
-    settings.new("General", "checkbox", {
-        "name": "google_apps_enabled",
-        "label": "Enable Google Apps"
+    settings.create("General", "Behaviour", "description", {
+        "text": "Dies sind doch gute Aussichten, oder? Jacken werden für immer schmutzabweisen sein, für immer und ewig in allen Lebenslagen und vor allem auch auf dem Mond. Warum ich hierfür kein Lorem Ipsum verwende, weiß ich auch nicht."
     });
-    settings.new("General", "text", {
-        "name": "google_apps_domain",
-        "label": "Domain:",
-        "text": "none"
+    settings.create("General", "Behaviour", "button", {
+        "label": "Bestellen Sie hier:",
+        "text": "Jetzt kaufen"
     });
-    settings.new("General", "text",  {
-        "name": "gmail_label",
-        "label": "GMail Label:",
-        "text": "none"
+    settings.create("General", "Behaviour", "text", {
+        "label": "Oder geben Sie hier ihre Daten ein:",
+        "text": "Name"
     });
-    
-    settings.new("General", "popupButton", {
-        "name": "open_links_in",
-        "label": "Open Links in:",
+    settings.create("General", "Behaviour", "checkbox", {
+        "label": "Bestellung aktivieren"
+    });
+    settings.create("General", "Behaviour", "slider", {
+        "label": "Größe Ihrer Jacke:",
+        "max": "160",
+        "min": "70",
+        "step": "1"
+    });
+    settings.create("General", "Behaviour", "popupButton", {
+        "label": "Wählen Sie jetzt noch die Farbe:",
         "options": [
             {
-                "value": "new_window",
-                "text": "a new window"
+                "value": "blue",
+                "text": "Blau"
             },
             {
-                "value": "new_tab",
-                "text": "a new tab"
+                "value": "green",
+                "text": "Grün"
             },
             {
-                "value": "gmail_tab",
-                "text": "an already open GMail tab"
-            },
-            {
-                "value": "active_tab",
-                "text": "the active tab"
+                "value": "red",
+                "text": "Rot"
             }
         ]
     });
-    
-    settings.new("Sound Notifications", "checkbox", {
-        "name": "sound_noti_enabled",
-        "label": "Enable Sound Notifications"
+    settings.create("General", "Behaviour", "listBox", {
+        "label": "Oder wählen Sie sie hier:",
+        "options": [
+            {
+                "value": "blue",
+                "text": "Blau"
+            },
+            {
+                "value": "green",
+                "text": "Grün"
+            },
+            {
+                "value": "red",
+                "text": "Rot"
+            }
+        ]
     });
-    settings.new("Sound Notifications", "slider", {
-        "name": "sound_noti_volume",
-        "label": "Volume:",
-        "min": "0",
-        "max": "10",
-        "step": "1"
-    });
-    settings.new("Sound Notifications", "button", {
-        "label": "Select a custom sound:",
-        "text": "Browse..."
+    settings.create("General", "Behaviour", "radioButtons", {
+        "label": "Oder sogar hier:",
+        "options": [
+            {
+                "value": "blue",
+                "text": "Blau"
+            },
+            {
+                "value": "green",
+                "text": "Grün"
+            },
+            {
+                "value": "red",
+                "text": "Rot"
+            }
+        ]
     });
 });

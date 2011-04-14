@@ -2,40 +2,6 @@
     var settings = Store("settings");
     var Bundle = {};
     
-    Bundle.Group = new Class({
-        // label
-        "initialize": function (params) {
-            this.params = (typeOf(params) === "object") ? params : {};
-            
-            this.createDOM();
-            this.setupDOM();
-            
-            return this.bundle;
-        },
-        
-        "createDOM": function () {
-            this.bundle = new Element("div", {
-                "class": "setting bundle group"
-            });
-            
-            this.container = new Element("div", {
-                "class": "setting container group"
-            });
-            
-            this.element = new Element("h2", {
-                "class": "setting element group"
-            });
-        },
-        
-        "setupDOM": function () {
-            if (typeOf(this.params.label) === "string") {
-                this.element.set("text", this.params.label);
-            }
-            this.element.inject(this.container);
-            this.container.inject(this.bundle);
-        }
-    });
-    
     Bundle.Description = new Class({
         // text
         "initialize": function (params) {
@@ -571,10 +537,9 @@
             this.container = container;
         },
         
-        "new": function (type, params) {
+        "create": function (type, params) {
             // Available Types
             var types = {
-                "group": "Group",
                 "description": "Description",
                 "button": "Button",
                 "text": "Text",

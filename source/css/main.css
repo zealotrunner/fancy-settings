@@ -4,14 +4,14 @@
         linear,
         left top,
         left 500,
-        color-stop(0, #EAEEF3),
-        color-stop(1, #F2F6FA)
+        color-stop(0, #EDEDED),
+        color-stop(1, #F5F5F5)
     );
     width: 219px;
     height: 100%;
     top: 0;
     left: 0;
-    border-right: 1px solid #C6C9CE;
+    border-right: 1px solid #C2C2C2;
     box-shadow: inset -8px 0 30px -30px black;
 }
 
@@ -26,7 +26,7 @@
     top: 13px;
     right: 25px;
     font-size: 26px;
-    color: #53637D;
+    color: #707070;
 }
 
 #tab-container {
@@ -35,6 +35,7 @@
     top: 50px;
     bottom: 0;
     overflow-y: auto;
+    overflow-x: hidden;
     text-align: right;
 }
 
@@ -46,13 +47,13 @@
     border-right: none !important;
     font-size: 13px;
     line-height: 30px;
-    color: #426DC9;
+    color: #808080;
     cursor: pointer;
 }
 
 #tab-container .tab.selected {
-    background-color: #BBCEE9;
-    border: 1px solid #8FAAD9;
+    background-color: #D4D4D4;
+    border: 1px solid #BFBFBF;
     color: black;
     text-shadow: none;
     box-shadow: inset -12px 0 30px -30px black;
@@ -79,8 +80,18 @@
     bottom: 0;
     left: 220px;
     right: 0;
+    overflow-y: auto;
+    overflow-x: hidden;
 }
 
 .tab-content {
+    position: absolute;
+    max-width: 840px;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    padding: 20px;
+    padding-top: 13px;
     display: none;
 }

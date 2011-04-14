@@ -71,7 +71,7 @@
             this.contentContainer = contentContainer;
         },
         
-        "new": function () {
+        "create": function () {
             // Create a new Bundle
             var bundle = new Bundle(this);
             
