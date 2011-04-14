@@ -543,7 +543,7 @@
             
             // Create the Bundle
             var bundle = new Bundle[types[type]](params);
-            bundle.bundle..inject(this.container);
+            bundle.bundle.inject(this.container);
             return bundle;
         }
     });
