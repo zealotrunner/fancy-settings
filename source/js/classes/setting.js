@@ -572,6 +572,7 @@
         },
         
         "new": function (type, params) {
+            // Available Types
             var types = {
                 "group": "Group",
                 "description": "Description",
@@ -584,10 +585,12 @@
                 "radioButtons": "RadioButtons"
             };
             
+            // Check if the requested Type is valid
             if (!Object.keys(types).contains(type)) {
                 throw "invalidType";
             }
             
+            // Create the Bundle
             return (new Bundle[types[type]](params)).inject(this.container);
         }
     });

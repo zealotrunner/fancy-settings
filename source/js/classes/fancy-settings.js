@@ -1,29 +1,42 @@
 (function () {
     this.FancySettings = new Class({
+        "tabs": {},
+        
         "initialize": function (name) {
-            // Set the page title
+            // Set the Page Title
             document.title = name;
             
-            // Initialize the search
+            // Initialize the Search
             //TBI
             
-            // Initialize the tab creator
-            this._tab = new Tab($("tab-container"), $("content"));
-        },
-        
-        "tab": function (name) {
-            var bundle = this._tab.new();
-            bundle.tab.set("text", name);
-            return bundle.content;
+            // Initialize the Tab Creator
+            this.tab = new Tab($("tab-container"), $("content"));
         },
         
         "new": function (tab, type, params) {
-            var setting = new Setting(tab);
-            return setting.new(type, params);
+            // Check Tab Name
+            if (typeOf(tab) !== "string" || tab === "") {
+                throw invalidTab;
+            }
+            
+            // Create Tab if it doesn't exist already
+            if (this.tabs[tab] === undefined) {
+                this.tabs[tab] = {};
+                
+                this.tabs[tab].content = this.tab.new();
+                this.tabs[tab].content.tab.set("text", tab);
+                
+                this.tabs[tab].content = this.tabs[tab].content.content;
+                this.tabs[tab].setting = new Setting(this.tabs[tab].content);
+            }
+            tab = this.tabs[tab];
+            
+            // Create the Setting
+            return tab.setting.new(type, params);
         }
     });
     
     this.FancySettings.initWithManifest = function (name) {
-        console.log("i would do something...");
+        //TBI
     };
 }());
