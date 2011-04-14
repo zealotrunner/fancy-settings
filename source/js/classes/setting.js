@@ -71,7 +71,10 @@
     });
     
     Bundle.Button = new Class({
-        // label, text, action(click)
+        // label, text
+        // action -> click
+        "Implements": Events,
+        
         "initialize": function (params) {
             this.params = (typeOf(params) === "object") ? params : {};
             
@@ -116,16 +119,17 @@
         },
         
         "addEvents": function () {
-            if (typeOf(this.params.action) === "function") {
-                this.element.addEvent("click", (function () {
-                    this.params.action();
-                }).bind(this));
-            }
+            this.element.addEvent("click", (function () {
+                this.fireEvent("action");
+            }).bind(this));
         }
     });
     
     Bundle.Text = new Class({
-        // name, label, text, action(change), masked
+        // name, label, text, masked
+        // action -> change & keyup
+        "Implements": Events,
+        
         "initialize": function (params) {
             this.params = (typeOf(params) === "object") ? params : {};
             
@@ -183,9 +187,7 @@
                     settings.save();
                 }
                 
-                if (typeOf(this.params.action) === "function") {
-                    this.params.action(this.get());
-                }
+                this.fireEvent("action", this.get());
             }).bind(this);
             
             this.element.addEvent("change", change);
@@ -204,7 +206,10 @@
     });
     
     Bundle.Checkbox = new Class({
-        // name, label, action(change)
+        // name, label
+        // action -> change
+        "Implements": Events,
+        
         "initialize": function (params) {
             this.params = (typeOf(params) === "object") ? params : {};
             
@@ -257,9 +262,7 @@
                     settings.save();
                 }
                 
-                if (typeOf(this.params.action) === "function") {
-                    this.params.action(this.get());
-                }
+                this.fireEvent("action", this.get());
             }).bind(this));
         },
         
@@ -275,7 +278,10 @@
     });
     
     Bundle.Slider = new Class({
-        // name, label, action(change), max, min, step
+        // name, label, max, min, step
+        // action -> change
+        "Implements": Events,
+        
         "initialize": function (params) {
             this.params = (typeOf(params) === "object") ? params : {};
             
@@ -336,9 +342,7 @@
                     settings.save();
                 }
                 
-                if (typeOf(this.params.action) === "function") {
-                    this.params.action(this.get());
-                }
+                this.fireEvent("action", this.get());
             }).bind(this));
         },
         
@@ -354,7 +358,10 @@
     });
     
     Bundle.PopupButton = new Class({
-        // name, label, action(change), options[{value, text}]
+        // name, label, options[{value, text}]
+        // action -> change
+        "Implements": Events,
+        
         "initialize": function (params) {
             this.params = (typeOf(params) === "object") ? params : {};
             this.params.options = (typeOf(this.params.options) === "array") ? this.params.options : [];
@@ -413,9 +420,7 @@
                     settings.save();
                 }
                 
-                if (typeOf(this.params.action) === "function") {
-                    this.params.action(this.get());
-                }
+                this.fireEvent("action", this.get());
             }).bind(this));
         },
         
@@ -463,7 +468,10 @@
     });
     
     Bundle.RadioButtons = new Class({
-        // name, label, action(change), options[{value, text}]
+        // name, label, options[{value, text}]
+        // action -> change
+        "Implements": Events,
+        
         "initialize": function (params) {
             this.params = (typeOf(params) === "object") ? params : {};
             this.params.options = (typeOf(this.params.options) === "array") ? this.params.options : [];
@@ -529,9 +537,7 @@
                     settings.save();
                 }
                 
-                if (typeOf(this.params.action) === "function") {
-                    this.params.action(this.get());
-                }
+                this.fireEvent("action", this.get());
             }).bind(this));
         },
         
