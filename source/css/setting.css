@@ -8,20 +8,48 @@
 
 .setting.group {
     border-top: 1px solid #EEEEEE;
-    margin-top: 3px;
-    padding-top: 15px;
+    margin-top: 10px;
+    padding-top: 5px;
+    padding-left: 2px;
 }
 
 .setting.group-name {
     width: 130px;
-    padding-left: 3px;
+    padding: 0;
     font-size: 14px;
     font-weight: bold;
     vertical-align: top;
 }
 
-.setting.group-content {
+.setting.bundle {
+    margin-bottom: 5px;
 }
 
-.setting.bundle {
+.setting.bundle.list-box {
+    margin-bottom: 10px;
+}
+
+.setting.label {
+    margin-right: 5px;
+    font-size: 13px;
+    font-weight: normal;
+}
+
+.setting.label.checkbox {
+    margin-left: 5px;
+}
+
+.setting.element.description {
+    color: #666666;
+}
+
+.setting.element.slider {
+    position: relative;
+    top: 4px;
+}
+
+.setting.element.list-box {
+    height: 100px;
+    width: 100%;
+    display: block;
 }
