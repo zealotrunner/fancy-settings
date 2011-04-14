@@ -9,8 +9,6 @@
             
             this.createDOM();
             this.setupDOM();
-            
-            return this.bundle;
         },
         
         "createDOM": function () {
@@ -47,8 +45,6 @@
             this.createDOM();
             this.setupDOM();
             this.addEvents();
-            
-            return this.bundle;
         },
         
         "createDOM": function () {
@@ -106,8 +102,6 @@
             if (typeOf(this.params.name) === "string" && this.params.name !== "") {
                 this.set(settings[this.params.name]);
             }
-            
-            return this.bundle;
         },
         
         "createDOM": function () {
@@ -186,8 +180,6 @@
             if (typeOf(this.params.name) === "string" && this.params.name !== "") {
                 this.set(settings[this.params.name]);
             }
-            
-            return this.bundle;
         },
         
         "createDOM": function () {
@@ -258,8 +250,6 @@
             if (typeOf(this.params.name) === "string" && this.params.name !== "") {
                 this.set(settings[this.params.name]);
             }
-            
-            return this.bundle;
         },
         
         "createDOM": function () {
@@ -339,8 +329,6 @@
             if (typeOf(this.params.name) === "string" && this.params.name !== "") {
                 this.set(settings[this.params.name]);
             }
-            
-            return this.bundle;
         },
         
         "createDOM": function () {
@@ -449,8 +437,6 @@
             if (typeOf(this.params.name) === "string" && this.params.name !== "") {
                 this.set(settings[this.params.name]);
             }
-            
-            return this.bundle;
         },
         
         "createDOM": function () {
@@ -556,7 +542,9 @@
             }
             
             // Create the Bundle
-            return (new Bundle[types[type]](params)).inject(this.container);
+            var bundle = new Bundle[types[type]](params);
+            bundle.bundle..inject(this.container);
+            return bundle;
         }
     });
 }());
