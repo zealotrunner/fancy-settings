@@ -40,12 +40,12 @@
                 setting.bundle.inject(setting.container);
             }).bind(this));
             
-            if (string === "") {
+            if (string.trim() === "") {
                 document.body.removeClass("searching");
             } else {
                 document.body.addClass("searching");
                 var results = this.index.filter(function (setting) {
-                    if (setting.searchString.contains(string.toLowerCase())) {
+                    if (setting.searchString.contains(string.trim().toLowerCase())) {
                         return true;
                     }
                 });

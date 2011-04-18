@@ -66,7 +66,7 @@
                 "class": "setting container button"
             });
             
-            this.element = new Element("button", {
+            this.element = new Element("input", {
                 "class": "setting element button",
                 "type": "button"
             });
@@ -84,7 +84,7 @@
             }
             
             if (typeOf(this.params.text) === "string") {
-                this.element.set("text", this.params.text);
+                this.element.set("value", this.params.text);
                 this.searchString = this.searchString + " " + this.params.text;
             }
             this.element.inject(this.container);
