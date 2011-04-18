@@ -1,3 +1,16 @@
+/*
+// Copyright (c) 2011 Frank Kohlhepp
+// https://github.com/frankkohlhepp/fancy-settings
+// License: LGPL v2.1
+*/
+body.searching .tab-content {
+    display: none !important;
+}
+
+body.searching #search-results-container {
+    display: block !important;
+}
+
 #sidebar {
     position: absolute;
     background-image: -webkit-gradient(
@@ -17,6 +30,8 @@
 
 #sidebar img {
     position: absolute;
+    width: 30px;
+    height: 30px;
     top: 12px;
     left: 12px;
 }
@@ -51,7 +66,17 @@
     cursor: pointer;
 }
 
-#tab-container .tab.selected {
+body.searching #tab-container .tab.selected {
+    background-color: transparent;
+    padding-top: 1px;
+    padding-bottom: 1px;
+    border: none;
+    color: #808080;
+    text-shadow: inherit;
+    box-shadow: none;
+}
+
+#tab-container .tab.selected, body.searching #search-container {
     background-color: #D4D4D4;
     border: 1px solid #BFBFBF;
     color: black;
@@ -64,6 +89,7 @@
     margin-left: 0;
     margin-right: 0;
     padding-right: 23px !important;
+    cursor: default !important;
 }
 
 #search-container input[type=search] {

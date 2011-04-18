@@ -1,3 +1,8 @@
+//
+// Copyright (c) 2011 Frank Kohlhepp
+// https://github.com/frankkohlhepp/fancy-settings
+// License: LGPL v2.1
+//
 (function () {
     var Bundle = new Class({
         "creator": null,
@@ -8,7 +13,7 @@
         "initialize": function (creator) {
             this.creator = creator;
             
-            // Create DOM Elements
+            // Create DOM elements
             this.tab = new Element("div", {
                 "class": "tab"
             });
@@ -17,7 +22,7 @@
                 "class": "tab-content"
             });
             
-            // Create Event Handlers
+            // Create event handlers
             this.tab.addEvent("click", (function (event) {
                 this.activate();
             }).bind(this));
@@ -29,7 +34,7 @@
                 return;
             }
             
-            // Deactivate the currently active Bundle
+            // Deactivate the currently active bundle
             if (this.creator.activeBundle) {
                 this.creator.activeBundle.deactivate();
             }
@@ -38,7 +43,7 @@
             this.tab.addClass("selected");
             this.content.addClass("show");
             
-            // Tell our Creator that we're the active Bundle
+            // Tell our creator that we're the active bundle
             this.creator.activeBundle = this;
             
             this.active = true;
@@ -62,7 +67,7 @@
         "activeBundle": null,
         
         "initialize": function (tabContainer, contentContainer) {
-            // Check Containers
+            // Check containers
             if (typeOf(tabContainer) !== "element" || typeOf(contentContainer) !== "element") {
                 throw "containerNotAnElement";
             }
@@ -72,14 +77,14 @@
         },
         
         "create": function () {
-            // Create a new Bundle
+            // Create a new bundle
             var bundle = new Bundle(this);
             
-            // Inject the Bundle into the DOM
+            // Inject the bundle into the DOM
             bundle.tab.inject(this.tabContainer);
             bundle.content.inject(this.contentContainer);
             
-            // Activate the Bundle if it's the first created
+            // Activate the bundle if it's the first created
             if (!this.activeBundle) {
                 bundle.activate();
             }

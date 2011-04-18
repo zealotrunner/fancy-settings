@@ -1,3 +1,8 @@
+//
+// Copyright (c) 2011 Frank Kohlhepp
+// https://github.com/frankkohlhepp/fancy-settings
+// License: LGPL v2.1
+//
 (function () {
     var settings = Store("settings");
     var Bundle = {};
@@ -6,9 +11,11 @@
         // text
         "initialize": function (params) {
             this.params = (typeOf(params) === "object") ? params : {};
+            this.searchString = "";
             
             this.createDOM();
             this.setupDOM();
+            this.searchString = this.searchString.toLowerCase();
         },
         
         "createDOM": function () {
@@ -28,6 +35,7 @@
         "setupDOM": function () {
             if (typeOf(this.params.text) === "string") {
                 this.element.set("text", this.params.text);
+                this.searchString = this.searchString + " " + this.params.text;
             }
             this.element.inject(this.container);
             this.container.inject(this.bundle);
@@ -41,10 +49,12 @@
         
         "initialize": function (params) {
             this.params = (typeOf(params) === "object") ? params : {};
+            this.searchString = "";
             
             this.createDOM();
             this.setupDOM();
             this.addEvents();
+            this.searchString = this.searchString.toLowerCase();
         },
         
         "createDOM": function () {
@@ -70,10 +80,12 @@
             if (typeOf(this.params.label) === "string") {
                 this.label.set("text", this.params.label);
                 this.label.inject(this.container);
+                this.searchString = this.searchString + " " + this.params.label;
             }
             
             if (typeOf(this.params.text) === "string") {
                 this.element.set("text", this.params.text);
+                this.searchString = this.searchString + " " + this.params.text;
             }
             this.element.inject(this.container);
             
@@ -94,6 +106,7 @@
         
         "initialize": function (params) {
             this.params = (typeOf(params) === "object") ? params : {};
+            this.searchString = "";
             
             this.createDOM();
             this.setupDOM();
@@ -102,6 +115,8 @@
             if (typeOf(this.params.name) === "string" && this.params.name !== "") {
                 this.set(settings[this.params.name]);
             }
+            
+            this.searchString = this.searchString.toLowerCase();
         },
         
         "createDOM": function () {
@@ -127,10 +142,12 @@
             if (typeOf(this.params.label) === "string") {
                 this.label.set("text", this.params.label);
                 this.label.inject(this.container);
+                this.searchString = this.searchString + " " + this.params.label;
             }
             
             if (typeOf(this.params.text) === "string") {
                 this.element.set("placeholder", this.params.text);
+                this.searchString = this.searchString + " " + this.params.text;
             }
             if (this.params.masked === true) {
                 this.element.set("type", "password");
@@ -172,6 +189,7 @@
         
         "initialize": function (params) {
             this.params = (typeOf(params) === "object") ? params : {};
+            this.searchString = "";
             
             this.createDOM();
             this.setupDOM();
@@ -180,6 +198,8 @@
             if (typeOf(this.params.name) === "string" && this.params.name !== "") {
                 this.set(settings[this.params.name]);
             }
+            
+            this.searchString = this.searchString.toLowerCase();
         },
         
         "createDOM": function () {
@@ -209,6 +229,7 @@
             if (typeOf(this.params.label) === "string") {
                 this.label.set("text", this.params.label);
                 this.label.inject(this.container);
+                this.searchString = this.searchString + " " + this.params.label;
             }
             this.container.inject(this.bundle);
         },
@@ -242,6 +263,7 @@
         
         "initialize": function (params) {
             this.params = (typeOf(params) === "object") ? params : {};
+            this.searchString = "";
             
             this.createDOM();
             this.setupDOM();
@@ -250,6 +272,8 @@
             if (typeOf(this.params.name) === "string" && this.params.name !== "") {
                 this.set(settings[this.params.name]);
             }
+            
+            this.searchString = this.searchString.toLowerCase();
         },
         
         "createDOM": function () {
@@ -275,15 +299,16 @@
             if (typeOf(this.params.label) === "string") {
                 this.label.set("text", this.params.label);
                 this.label.inject(this.container);
+                this.searchString = this.searchString + " " + this.params.label;
             }
             
-            if (typeOf(this.params.max) === "string") {
+            if (typeOf(this.params.max) === "number") {
                 this.element.set("max", this.params.max);
             }
-            if (typeOf(this.params.min) === "string") {
+            if (typeOf(this.params.min) === "number") {
                 this.element.set("min", this.params.min);
             }
-            if (typeOf(this.params.step) === "string") {
+            if (typeOf(this.params.step) === "number") {
                 this.element.set("step", this.params.step);
             }
             this.element.inject(this.container);
@@ -303,11 +328,12 @@
         },
         
         "get": function () {
-            return this.element.get("value");
+            return Number.from(this.element.get("value"));
         },
         
         "set": function (value) {
-            value = (typeOf(value) === "string") ? value : "";
+            var min = (typeOf(this.params.min) === "number") ? this.params.min : 0;
+            value = (typeOf(value) === "number") ? value : min;
             this.element.set("value", value);
             return this;
         }
@@ -321,6 +347,7 @@
         "initialize": function (params) {
             this.params = (typeOf(params) === "object") ? params : {};
             this.params.options = (typeOf(this.params.options) === "array") ? this.params.options : [];
+            this.searchString = "";
             
             this.createDOM();
             this.setupDOM();
@@ -329,6 +356,8 @@
             if (typeOf(this.params.name) === "string" && this.params.name !== "") {
                 this.set(settings[this.params.name]);
             }
+            
+            this.searchString = this.searchString.toLowerCase();
         },
         
         "createDOM": function () {
@@ -349,11 +378,17 @@
             });
             
             this.params.options.each((function (option) {
-                option = (typeOf(option) === "object") ? option : {};
+                if (typeOf(option) !== "object") {
+                    return;
+                } else if (typeOf(option.value) !== "string" || option.value === "") {
+                    return;
+                }
+                
+                this.searchString = this.searchString + " " + ((typeOf(option.text) === "string" && option.text !== "") ? option.text : option.value);
                 
                 (new Element("option", {
                     "value": option.value,
-                    "text": option.text || option.value
+                    "text": (typeOf(option.text) === "string" && option.text !== "") ? option.text : option.value
                 })).inject(this.element);
             }).bind(this));
         },
@@ -362,6 +397,7 @@
             if (typeOf(this.params.label) === "string") {
                 this.label.set("text", this.params.label);
                 this.label.inject(this.container);
+                this.searchString = this.searchString + " " + this.params.label;
             }
             this.element.inject(this.container);
             this.container.inject(this.bundle);
@@ -383,7 +419,10 @@
         },
         
         "set": function (value) {
-            value = (typeOf(value) === "string") ? value : "";
+            if (typeOf(value) !== "string" || value === "") {
+                return this;
+            }
+            
             this.element.set("value", value);
             return this;
         }
@@ -411,13 +450,23 @@
             });
             
             this.params.options.each((function (option) {
-                option = (typeOf(option) === "object") ? option : {};
+                if (typeOf(option) !== "object") {
+                    return;
+                } else if (typeOf(option.value) !== "string" || option.value === "") {
+                    return;
+                }
+                
+                this.searchString = this.searchString + " " + ((typeOf(option.text) === "string" && option.text !== "") ? option.text : option.value);
                 
                 (new Element("option", {
                     "value": option.value,
-                    "text": option.text || option.value
+                    "text": (typeOf(option.text) === "string" && option.text !== "") ? option.text : option.value
                 })).inject(this.element);
             }).bind(this));
+        },
+        
+        "get": function () {
+            return this.element.get("value") || undefined;
         }
     });
     
@@ -429,6 +478,7 @@
         "initialize": function (params) {
             this.params = (typeOf(params) === "object") ? params : {};
             this.params.options = (typeOf(this.params.options) === "array") ? this.params.options : [];
+            this.searchString = "";
             
             this.createDOM();
             this.setupDOM();
@@ -437,6 +487,8 @@
             if (typeOf(this.params.name) === "string" && this.params.name !== "") {
                 this.set(settings[this.params.name]);
             }
+            
+            this.searchString = this.searchString.toLowerCase();
         },
         
         "createDOM": function () {
@@ -452,8 +504,14 @@
             
             var settingID = String.uniqueID();
             this.params.options.each((function (option) {
-                option = (typeOf(option) === "object") ? option : {};
+                if (typeOf(option) !== "object") {
+                    return;
+                } else if (typeOf(option.value) !== "string" || option.value === "") {
+                    return;
+                }
                 var id = String.uniqueID();
+                
+                this.searchString = this.searchString + " " + ((typeOf(option.text) === "string" && option.text !== "") ? option.text : option.value);
                 
                 var container = (new Element("div", {
                     "class": "setting container radio-buttons"
@@ -470,7 +528,7 @@
                 (new Element("label", {
                     "class": "setting element label radio-buttons",
                     "for": id,
-                    "text": option.text || option.value
+                    "text": (typeOf(option.text) === "string" && option.text !== "") ? option.text : option.value
                 })).inject(container);
             }).bind(this));
         },
@@ -479,6 +537,7 @@
             if (typeOf(this.params.label) === "string") {
                 this.label.set("text", this.params.label);
                 this.label.inject(this.bundle, "top");
+                this.searchString = this.searchString + " " + this.params.label;
             }
         },
         
@@ -502,7 +561,9 @@
         },
         
         "set": function (value) {
-            value = (typeOf(value) === "string") ? value : "";
+            if (typeOf(value) !== "string" || value === "") {
+                return this;
+            }
             
             var desiredEl = this.elements.filter((function (el) {
                 return (el.get("value") === value);
@@ -515,7 +576,7 @@
     
     this.Setting = new Class({
         "initialize": function (container) {
-            // Check Container
+            // Check container
             if (typeOf(container) !== "element") {
                 throw "containerNotAnElement";
             }
@@ -524,7 +585,7 @@
         },
         
         "create": function (type, params) {
-            // Available Types
+            // Available types
             var types = {
                 "description": "Description",
                 "button": "Button",
@@ -536,13 +597,14 @@
                 "radioButtons": "RadioButtons"
             };
             
-            // Check if the requested Type is valid
+            // Check if the requested type is valid
             if (!Object.keys(types).contains(type)) {
                 throw "invalidType";
             }
             
-            // Create the Bundle
+            // Create the bundle
             var bundle = new Bundle[types[type]](params);
+            bundle.container = this.container;
             bundle.bundle.inject(this.container);
             return bundle;
         }

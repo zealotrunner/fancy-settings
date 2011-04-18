@@ -1,3 +1,8 @@
+/*
+// Copyright (c) 2011 Frank Kohlhepp
+// https://github.com/frankkohlhepp/fancy-settings
+// License: LGPL v2.1
+*/
 .tab-content h2 {
     margin: 0;
     padding-bottom: 5px;
@@ -39,9 +44,9 @@
     margin-left: 5px;
 }
 
-.setting.element.label.radio-buttons {
+.setting.label.checkbox {
     position: relative;
-    top: -1px;
+    top: 1px;
 }
 
 .setting.label.radio-buttons + .setting.container.radio-buttons {
@@ -61,4 +66,10 @@
     height: 100px;
     width: 100%;
     display: block;
+}
+
+#nothing-found {
+    position: relative;
+    font-size: 20px;
+    display: none;
 }

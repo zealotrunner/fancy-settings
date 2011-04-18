@@ -1,3 +1,8 @@
+<!--
+// Copyright (c) 2011 Frank Kohlhepp
+// https://github.com/frankkohlhepp/fancy-settings
+// License: LGPL v2.1
+-->
 <!DOCTYPE html>
 <html>
     <head>
@@ -5,6 +10,7 @@
         <title></title>
         
         <!-- Stylesheets -->
+        <link rel="icon" href="icon.png">
         <link rel="stylesheet" href="lib/default.css" media="screen">
         <link rel="stylesheet" href="css/main.css" media="screen">
         <link rel="stylesheet" href="css/setting.css" media="screen">
@@ -14,6 +20,7 @@
         <script src="lib/mootools-core.js"></script>
         <script src="js/classes/tab.js"></script>
         <script src="js/classes/setting.js"></script>
+        <script src="js/classes/search.js"></script>
         <script src="js/classes/fancy-settings.js"></script>
         <script src="settings.js"></script>
     </head>
@@ -26,6 +33,16 @@
                 </div>
             </div>
         </div>
-        <div id="content"></div>
+        <div id="content">
+            <div id="search-results-container" class="tab-content">
+                <h2>Search</h2>
+                <table class="setting group">
+                    <tr>
+                        <td class="setting group-name">Results</td>
+                        <td id="search-results" class="settings group-content"></td>
+                    </tr>
+                </table>
+            </div>
+        </div>
     </body>
 </html>

@@ -1,13 +1,13 @@
 /*
 // Copyright (c) 2007 - 2010 blueprintcss.org
-// Modified by Frank Kohlhepp
+// Modified by Frank Kohlhepp in 2011
 // https://github.com/frankkohlhepp/default-css
 // License: MIT-license
 */
 
-/* ============================= */
-/* = Reset default browser CSS = */
-/* ============================= */
+/*
+// Reset default browser CSS
+*/
 html {
     margin: 0;
     padding: 0;
@@ -72,9 +72,9 @@ a img {
     outline: 0;
 }
 
-/* ============================= */
-/* = Set up default typography = */
-/* ============================= */
+/*
+// Set up default typography
+*/
 html {
     font-size: 100.01%;
 }
@@ -352,9 +352,9 @@ img.no-select, .no-select img {
     padding-bottom: 0;
 }
 
-/* ==================================== */
-/* = Set up default styling for forms = */
-/* ==================================== */
+/*
+// Set up default styling for forms
+*/
 label {
     font-weight: bold;
 }

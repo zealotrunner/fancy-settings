@@ -1,0 +1,107 @@
+// SAMPLE MANIFEST
+// (learn by reading...)
+//
+// A manifest can get rather complex(-looking),
+// so you might wanna consider specifing
+// your settings manually in the settings.js
+// file. Instructions are included.
+{
+    "name": "My Extension",
+    "tabs": [
+        {
+            "name": "Tab 1",
+            "groups": [
+                {
+                    "name": "Group 1",
+                    "settings": [
+                        {
+                            "type": "description",
+                            "text": "This is a description. You can write any text inside of this."
+                        },
+                        {
+                            "type": "button",
+                            "label": "This describes the action:"
+                            "text": "Button Text"
+                        }
+                    ]
+                },
+                {
+                    "name": "Group 2",
+                    "settings": [
+                        {
+                            "type": "text",
+                            "label": "Enter for information:"
+                            "text": "e.g. \"sample\"",
+                            "masked": false
+                        },
+                        {
+                            "type": "checkbox",
+                            "label": "Enable this"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "name": "Tab 2",
+            "groups": [
+                {
+                    "name": "Group 3",
+                    "settings": [
+                        {
+                            "type": "slider",
+                            "label": "Pair of shoes",
+                            "max": 100,
+                            "min": 0,
+                            "step": 1
+                        },
+                        {
+                            "type": "popupButton",
+                            "label": "Choose this:",
+                            "options": [
+                                {
+                                    "value": "value_1",
+                                    "name": "Value 1"
+                                },
+                                {
+                                    "value": "value_2"
+                                }
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "name": "Group 4",
+                    "settings": [
+                        {
+                            "type": "listBox",
+                            "label": "Choose this:",
+                            "options": [
+                                {
+                                    "value": "value_1",
+                                    "name": "Value 1"
+                                },
+                                {
+                                    "value": "value_2"
+                                }
+                            ]
+                        },
+                        {
+                            "type": "radioButtons",
+                            "label": "Choose this:",
+                            "options": [
+                                {
+                                    "value": "value_1",
+                                    "name": "Value 1"
+                                },
+                                {
+                                    "value": "value_2"
+                                }
+                            ]
+                        }
+                    ]
+                }
+            ]
+        }
+    ]
+}
