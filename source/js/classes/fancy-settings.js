@@ -82,7 +82,40 @@
         }
     });
     
-    this.FancySettings.initWithManifest = function (name) {
-        //TBI
+    this.FancySettings.initWithManifest = function (name, callback) {
+        var request = new Request({
+            "url": name
+        });
+        request.addEvent("complete", function () {
+            var response = request.response.text;
+            
+            // Remove single line comments
+            response = response.replace(/\/\/.*\n/g, "");
+            
+            try {
+                response = JSON.parse(response);
+            } catch (e) {
+                throw "errorParsingManifest";
+            }
+            
+            var settings = new FancySettings(response.name);
+            settings.manifestOutput = {};
+            
+            response.tabs.each(function (tab) {
+                tab.groups.each(function (group) {
+                    group.settings.each(function (setting) {
+                        var output = settings.create(tab.name, group.name, setting.type, setting);
+                        if (typeOf(setting.name) === "string" && setting.name !== "") {
+                            settings.manifestOutput[setting.name] = output;
+                        }
+                    })
+                });
+            });
+            
+            if (typeOf(callback) === "function") {
+                callback(settings);
+            }
+        });
+        request.send();
     };
 }());
