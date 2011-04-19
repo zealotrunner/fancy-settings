@@ -9,6 +9,7 @@
 // License: MIT-license
 //
 (function () {
+    // MooTools features
     Array.prototype.$family = function () { return "array"; };
     
     function typeOf(item) {
@@ -53,6 +54,38 @@
         }
     }
     
+    function mergeOne(source, key, current) {
+        if (typeOf(current) === "object") {
+            if (typeOf(source[key]) === "object") {
+                mergeObject(source[key], current);
+            } else {
+                source[key] = cloneObject(current);
+            }
+        } else if (typeOf(current) === "array") {
+            source[key] = cloneArray(current);
+        } else {
+            source[key] = current;
+        }
+        
+        return source;
+    }
+    
+    function mergeObject(source, k, v) {
+        if (typeOf(k) === "string") {
+            return mergeOne(source, k, v);
+        }
+        
+        for (var i = 1, l = arguments.length; i < l; i++) {
+            var object = arguments[i];
+            for (var key in object) {
+                mergeOne(source, key, object[key]);
+            }
+        }
+        
+        return source;
+    }
+    
+    // Custom 3-way merge
     function merge() {
         var target = cloneObject(arguments[0]),
             original = cloneObject(arguments[0]);
@@ -152,6 +185,15 @@
         var originalStorage = localStorage.getItem(name),
             store = JSON.parse(localStorage.getItem(name)  || "{}");
         store.__proto__ = storePrototype;
+        return store;
+    };
+    
+    this.Store.initWithDefaults = function (name, obj) {
+        var store = Store(name);
+        var proto = store.__proto__;
+        store.__proto__ = ({}).__proto__;
+        store = mergeObject(cloneObject(obj), store);
+        store.__proto__ = proto;
         return store;
     };
 }());
