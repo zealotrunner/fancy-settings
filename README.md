@@ -65,8 +65,12 @@ If you save the created setting in a variable, you can call the methods get() an
     checkbox.get();
     => false
     
-    checkbox.set(true);
-
+    checkbox.set(true).get();
+    => true
+    
+    checkbox.addEvent("action", function (value) {
+        console.log("new value is ", value);
+    });
 
 
 
