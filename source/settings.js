@@ -6,8 +6,6 @@ window.addEvent("domready", function () {
         });
     });
     
-    
-    
     // Option 2: Do everything manually:
     // ---------------------------------
     // var settings = new FancySettings("My Extension");

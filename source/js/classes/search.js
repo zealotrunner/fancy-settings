@@ -37,7 +37,7 @@
         
         "find": function (string) {
             this.index.each((function (setting) {
-                setting.bundle.inject(setting.container);
+                setting.bundle.inject(setting.bundleContainer);
             }).bind(this));
             
             if (string.trim() === "") {
@@ -46,7 +46,9 @@
                 document.body.addClass("searching");
                 var results = this.index.filter(function (setting) {
                     if (setting.searchString.contains(string.trim().toLowerCase())) {
-                        return true;
+                        if (setting.type !== "description") {
+                            return true;
+                        }
                     }
                 });
                 

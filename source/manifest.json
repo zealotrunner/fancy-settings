@@ -4,7 +4,7 @@
 // A manifest can get rather complex(-looking),
 // so you might wanna consider specifing
 // your settings manually in the settings.js
-// file. Instructions are included.
+// file. Sample is included.
 //
 // Even if you choose to use the manifest file,
 // you can manually customize the settings.

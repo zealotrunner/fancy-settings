@@ -76,8 +76,11 @@
             
             // Create the setting
             var bundle = group.setting.create(type, params);
-            bundle.searchString = bundle.searchString + " " + tabName.toLowerCase() + " " + groupName.toLowerCase();
+            
+            // Index the setting
+            bundle.searchString = (bundle.searchString + "•" + tabName + "•" + groupName).toLowerCase();
             this.search.add(bundle);
+            
             return bundle;
         }
     });

@@ -34,13 +34,13 @@
     margin-bottom: 10px;
 }
 
-.setting.label {
+.setting.label, .setting.element-label {
     margin-right: 5px;
     font-size: 13px;
     font-weight: normal;
 }
 
-.setting.label.checkbox, .setting.element.label.radio-buttons {
+.setting.label.checkbox, .setting.element-label {
     margin-left: 5px;
 }
 
