@@ -1,12 +1,12 @@
 /*
 // Copyright (c) 2007 - 2010 blueprintcss.org
-// Modified by Frank Kohlhepp in 2011
+// Modified and extended by Frank Kohlhepp in 2011
 // https://github.com/frankkohlhepp/default-css
 // License: MIT-license
 */
 
 /*
-// Reset default browser CSS
+// Reset the default browser CSS
 */
 html {
     margin: 0;
@@ -25,10 +25,10 @@ hgroup, nav, section {
     margin: 0;
     padding: 0;
     border: 0;
+    font-family: inherit;
+    font-size: 100%;
     font-weight: inherit;
     font-style: inherit;
-    font-size: 100%;
-    font-family: inherit;
     vertical-align: baseline;
 }
 
@@ -68,12 +68,8 @@ a img {
     border: none;
 }
 
-:focus {
-    outline: 0;
-}
-
 /*
-// Set up default typography
+// Default typography
 */
 html {
     font-size: 100.01%;
@@ -165,8 +161,8 @@ a {
 
 blockquote {
     margin: 1.5em;
-    color: #666666;
     font-style: italic;
+    color: #666666;
 }
 
 strong, dfn {
@@ -236,28 +232,24 @@ dd {
 
 /* Tables */
 table {
-    margin-bottom: 1.4em;
     width: 100%;
+    margin-bottom: 1.4em;
 }
 
 th {
     font-weight: bold;
 }
 
-thead th {
-    background-color: #C3D9FF;
+table.zebra thead th, table.zebra tfoot th {
+    background-color: #BFBFBF;
 }
 
 th, td, caption {
     padding: 4px 10px 4px 5px;
 }
 
-tbody tr:nth-child(even) td, tbody tr.even td {
-    background-color: #E5ECF9;
-}
-
-tfoot {
-    font-style: italic;
+table.zebra tbody tr:nth-child(even) td, table.zebra tbody tr.even td {
+    background-color: #E6E6E6;
 }
 
 caption {
@@ -282,12 +274,22 @@ caption {
 }
 
 .no-select {
-    -webkit-user-select: none;
     cursor: default;
+    user-select: none;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -o-user-select: none;
 }
 
 img.no-select, .no-select img {
+    user-drag: none;
     -webkit-user-drag: none;
+    -moz-user-drag: none;
+    -o-user-drag: none;
+}
+
+.no-focus:focus, .no-focus :focus {
+    outline: 0;
 }
 
 .small {
@@ -304,6 +306,10 @@ img.no-select, .no-select img {
 
 .show {
     display: block !important;
+}
+
+.show-inline {
+    display: inline-block !important;
 }
 
 .hide {
@@ -353,15 +359,11 @@ img.no-select, .no-select img {
 }
 
 /*
-// Set up default styling for forms
+// Default styling for forms
 */
-label {
-    font-weight: bold;
-}
-
 fieldset {
-    padding: 0 1.4em 1.4em 1.4em;
     margin: 0 0 1.5em 0;
+    padding: 0 1.4em 1.4em 1.4em;
     border: 1px solid #CCCCCC;
 }
 
@@ -372,78 +374,33 @@ legend {
     font-size: 1.2em;
 }
 
-fieldset, #IE8#HACK {
-    padding-top: 1.4em;
-}
-
-legend, #IE8#HACK {
-    margin-top: 0;
-    margin-bottom: 0;
-}
-
 /* Form fields */
-input[type=text], input[type=password],
-input.text, input.title, textarea {
+input[type=text], input[type=password], textarea {
     background-color: white;
     border: 1px solid #BBBBBB;
 }
 
-input[type=text]:focus, input[type=password]:focus,
-input.text:focus, input.title:focus, textarea:focus {
-    border-color: #666666;
-}
-
-select {
-    background-color: white;
-    border-width: 1px;
-    border-style: solid;
-}
-
 input[type=text], input[type=password],
-input.text, input.title, textarea, select {
+textarea, select {
     margin: 0.5em 0;
 }
 
-input.text, input.title {
+input[type=text], input[type=password] {
     width: 300px;
-    padding: 5px;
-}
-
-input.title {
-    font-size: 1.5em;
+    padding: 4px;
 }
 
 textarea {
-    width: 390px;
-    height: 250px;
+    width: 450px;
+    height: 170px;
     padding: 5px;
 }
 
-form.inline {
-    line-height: 3;
-}
-
-form.inline p {
-    margin-bottom: 0;
-}
-
-/* Success, info, notice and error/alert boxes */
-.error, .alert, .notice, .success, .info {
+/* success, info, notice and error boxes */
+.success, .info, .notice, .error {
     margin-bottom: 1em;
     padding: 0.8em;
     border: 2px solid #DDDDDD;
-}
-
-.error, .alert {
-    background-color: #FBE3E4;
-    border-color: #FBC2C4;
-    color: #8A1F11;
-}
-
-.notice {
-    background-color: #FFF6BF;
-    border-color: #FFD324;
-    color: #514721;
 }
 
 .success {
@@ -458,12 +415,16 @@ form.inline p {
     color: #205791;
 }
 
-.error a, .alert a {
-    color: #8A1F11;
+.notice {
+    background-color: #FFF6BF;
+    border-color: #FFD324;
+    color: #514721;
 }
 
-.notice a {
-    color: #514721;
+.error {
+    background-color: #FBE3E4;
+    border-color: #FBC2C4;
+    color: #8A1F11;
 }
 
 .success a {
@@ -472,4 +433,12 @@ form.inline p {
 
 .info a {
     color: #205791;
+}
+
+.notice a {
+    color: #514721;
+}
+
+.error a {
+    color: #8A1F11;
 }
