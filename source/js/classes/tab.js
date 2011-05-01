@@ -4,12 +4,10 @@
 // License: LGPL v2.1
 //
 (function () {
-    var Bundle = new Class({
-        "creator": null,
-        "active": false,
-        "tab": null,
-        "content": null,
-        
+    var Bundle,
+        Tab;
+    
+    Bundle = new Class({
         "initialize": function (creator) {
             this.creator = creator;
             
@@ -29,49 +27,25 @@
         },
         
         "activate": function () {
-            // Check if we're already active
-            if (this.active) {
-                return;
-            }
-            
-            // Deactivate the currently active bundle
-            if (this.creator.activeBundle) {
+            if (this.creator.activeBundle && this.creator.activeBundle !== this) {
                 this.creator.activeBundle.deactivate();
             }
-            
-            // Activate us
             this.tab.addClass("selected");
             this.content.addClass("show");
-            
-            // Tell our creator that we're the active bundle
             this.creator.activeBundle = this;
-            
-            this.active = true;
         },
         
         "deactivate": function () {
-            // Check if we're already unactive
-            if (!this.active) {
-                return;
-            }
-            
-            // Deactivate us
             this.tab.removeClass("selected");
             this.content.removeClass("show");
-            
-            this.active = false;
+            this.creator.activeBundle = null;
         }
     });
     
-    this.Tab = new Class({
+    Tab = this.Tab = new Class({
         "activeBundle": null,
         
         "initialize": function (tabContainer, contentContainer) {
-            // Check containers
-            if (typeOf(tabContainer) !== "element" || typeOf(contentContainer) !== "element") {
-                throw "containerNotAnElement";
-            }
-            
             this.tabContainer = tabContainer;
             this.contentContainer = contentContainer;
         },
