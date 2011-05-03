@@ -27,7 +27,7 @@
     box-shadow: inset -8px 0 30px -30px black;
 }
 
-#sidebar img {
+#icon {
     position: absolute;
     width: 30px;
     height: 30px;
@@ -91,7 +91,7 @@ body.searching #tab-container .tab.selected {
     box-shadow: none;
 }
 
-#content {
+#tab-content-container {
     position: absolute;
     top: 0;
     bottom: 0;

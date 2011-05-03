@@ -4,93 +4,88 @@
 // License: LGPL v2.1
 //
 (function () {
-    this.FancySettings = new Class({
+    var FancySettings = this.FancySettings = new Class({
         "tabs": {},
         
-        "initialize": function (name) {
-            // Set the page title
-            document.title = name;
+        "initialize": function (name, icon) {
+            // Set title and icon
+            $$("title")[0].set("text", name);
+            $("favicon").set("href", icon);
+            $("icon").set("src", icon);
             
-            // Initialize the search
-            this.search = new Search($("search"), $("search-results"));
-            
-            // Initialize the tab creator
-            this.tab = new Tab($("tab-container"), $("content"));
+            this.search = new Search($("search"), $("search-result-container"));
+            this.tab = new Tab($("tab-container"), $("tab-content-container"));
         },
         
-        "create": function (tabName, groupName, type, params) {
-            // Check tab & group names
-            if (typeOf(tabName) !== "string" || tabName === "") {
-                throw "invalidTabName";
-            }
-            if (typeOf(groupName) !== "string" || groupName === "") {
-                throw "invalidGroupName";
-            }
+        "create": function (params) {
+            var tab,
+                group,
+                row,
+                content,
+                bundle;
             
             // Create tab if it doesn't exist already
-            if (this.tabs[tabName] === undefined) {
-                this.tabs[tabName] = {"groups":{}};
-                var tab = this.tabs[tabName];
+            if (this.tabs[params.tab] === undefined) {
+                this.tabs[params.tab] = {"groups":{}};
+                tab = this.tabs[params.tab];
                 
                 tab.content = this.tab.create();
-                tab.content.tab.set("text", tabName);
-                
-                // Add an event to help the search
-                tab.content.tab.addEvent("click", (function (event) {
-                    this.search.searchBox.set("value", "");
-                    this.search.find("");
-                }).bind(this));
-                
+                tab.content.tab.set("text", params.tab);
+                tab.content.tab.addEvent("click", this.search.reset.bind(this.search));
                 tab.content = tab.content.content;
+                
                 (new Element("h2", {
-                    "text": tabName
+                    "text": params.tab
                 })).inject(tab.content);
             } else {
-                var tab = this.tabs[tabName];
+                tab = this.tabs[params.tab];
             }
             
             // Create group if it doesn't exist already
-            if (tab.groups[groupName] === undefined) {
-                tab.groups[groupName] = {};
-                var group = tab.groups[groupName];
+            if (tab.groups[params.group] === undefined) {
+                tab.groups[params.group] = {};
+                group = tab.groups[params.group];
                 
                 group.content = (new Element("table", {
                     "class": "setting group"
                 })).inject(tab.content);
                 
-                var row = (new Element("tr")).inject(group.content);
+                row = (new Element("tr")).inject(group.content);
                 
                 (new Element("td", {
                     "class": "setting group-name",
-                    "text": groupName
+                    "text": params.group
                 })).inject(row);
                 
-                var content = (new Element("td", {
+                content = (new Element("td", {
                     "class": "setting group-content"
                 })).inject(row);
                 
                 group.setting = new Setting(content);
             } else {
-                var group = tab.groups[groupName];
+                group = tab.groups[params.group];
             }
             
-            // Create the setting
-            var bundle = group.setting.create(type, params);
-            
-            // Index the setting
-            bundle.searchString = (bundle.searchString + "•" + tabName + "•" + groupName).toLowerCase();
+            // Create and index the setting
+            bundle = group.setting.create(params);
+            bundle.searchString = (bundle.searchString + "•" + params.tab + "•" + params.group).toLowerCase();
             this.search.add(bundle);
             
             return bundle;
         }
     });
     
-    this.FancySettings.initWithManifest = function (name, callback) {
-        var request = new Request({
+    FancySettings.__proto__.initWithManifest = function (manifest, callback) {
+        var request,
+            response,
+            settings,
+            output;
+        
+        request = new Request({
             "url": name
         });
         request.addEvent("complete", function () {
-            var response = request.response.text;
+            response = request.response.text;
             
             // Remove single line comments
             response = response.replace(/\/\/.*\n/g, "");
@@ -101,13 +96,13 @@
                 throw "errorParsingManifest";
             }
             
-            var settings = new FancySettings(response.name);
+            settings = new FancySettings(response.name);
             settings.manifestOutput = {};
             
             response.tabs.each(function (tab) {
                 tab.groups.each(function (group) {
                     group.settings.each(function (setting) {
-                        var output = settings.create(tab.name, group.name, setting.type, setting);
+                        output = settings.create(tab.name, group.name, setting.type, setting);
                         if (typeOf(setting.name) === "string" && setting.name !== "") {
                             settings.manifestOutput[setting.name] = output;
                         }

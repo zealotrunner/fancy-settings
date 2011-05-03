@@ -4,28 +4,31 @@
 // License: LGPL v2.1
 //
 (function () {
-    var settings = Store("settings"),
-        Bundle = new Class({
+    var settings,
+        Bundle,
+        Setting;
+    
+    settings = new Store("settings");
+    Bundle = new Class({
         "Implements": Events,
         "searchString": "",
         
         "initialize": function (params) {
-            this.params = ((typeOf(params) === "object") ? params : {});
+            this.params = params;
             
             this.createDOM();
             this.setupDOM();
             this.addEvents();
             
             if (typeOf(this.params.name) === "string" && this.params.name !== "") {
-                this.set(settings[this.params.name], true);
+                this.set(settings.get(this.params.name), true);
             }
         },
         
         "addEvents": function () {
             this.element.addEvent("change", (function (event) {
                 if (typeOf(this.params.name) === "string" && this.params.name !== "") {
-                    settings[this.params.name] = this.get();
-                    settings.save();
+                    settings.set(this.params.name, this.get());
                 }
                 
                 this.fireEvent("action", this.get());
@@ -54,7 +57,7 @@
         "Extends": Bundle,
         
         "initialize": function (params) {
-            this.params = ((typeOf(params) === "object") ? params : {});
+            this.params = params;
             
             this.createDOM();
             this.setupDOM();
@@ -90,7 +93,7 @@
         "Extends": Bundle,
         
         "initialize": function (params) {
-            this.params = ((typeOf(params) === "object") ? params : {});
+            this.params = params;
             
             this.createDOM();
             this.setupDOM();
@@ -187,8 +190,8 @@
         "addEvents": function () {
             var change = (function (event) {
                 if (typeOf(this.params.name) === "string" && this.params.name !== "") {
-                    settings[this.params.name] = this.get();
-                    settings.save();
+                    console.log(this);
+                    settings.set(this.params.name, this.get());
                 }
                 
                 this.fireEvent("action", this.get());
@@ -325,15 +328,14 @@
         "Extends": Bundle,
         
         "initialize": function (params) {
-            this.params = ((typeOf(params) === "object") ? params : {});
-            this.params.options = ((typeOf(this.params.options) === "array") ? this.params.options : []);
+            this.params = params;
             
             this.createDOM();
             this.setupDOM();
             this.addEvents();
             
             if (typeOf(this.params.name) === "string" && this.params.name !== "") {
-                this.set(settings[this.params.name], true);
+                this.set(settings.get(this.params.name), true);
             }
         },
         
@@ -428,15 +430,14 @@
         "Extends": Bundle,
         
         "initialize": function (params) {
-            this.params = ((typeOf(params) === "object") ? params : {});
-            this.params.options = ((typeOf(this.params.options) === "array") ? this.params.options : []);
+            this.params = params;
             
             this.createDOM();
             this.setupDOM();
             this.addEvents();
             
             if (typeOf(this.params.name) === "string" && this.params.name !== "") {
-                this.set(settings[this.params.name], true);
+                this.set(settings.get(this.params.name), true);
             }
         },
         
@@ -494,8 +495,7 @@
         "addEvents": function () {
             this.bundle.addEvent("change", (function (event) {
                 if (typeOf(this.params.name) === "string" && this.params.name !== "") {
-                    settings[this.params.name] = this.get();
-                    settings.save();
+                    settings.set(this.params.name, this.get());
                 }
                 
                 this.fireEvent("action", this.get());
@@ -526,19 +526,17 @@
         }
     });
     
-    this.Setting = new Class({
+    Setting = this.Setting = new Class({
         "initialize": function (container) {
-            // Check container
-            if (typeOf(container) !== "element") {
-                throw "containerNotAnElement";
-            }
-            
             this.container = container;
         },
         
-        "create": function (type, params) {
+        "create": function (params) {
+            var types,
+                bundle;
+            
             // Available types
-            var types = {
+            types = {
                 "description": "Description",
                 "button": "Button",
                 "text": "Text",
@@ -549,17 +547,14 @@
                 "radioButtons": "RadioButtons"
             };
             
-            // Check if the requested type is valid
-            if (!Object.keys(types).contains(type)) {
-                throw "invalidType";
+            params.searchString = "";
+            params.container = this.container;
+            if (Object.keys(types).contains(params.type)) {
+                bundle = new Bundle[types[params.type]](params);
+                bundle.bundleContainer = this.container;
+                bundle.bundle.inject(this.container);
+                return bundle;
             }
-            
-            // Create the bundle
-            var bundle = new Bundle[types[type]](params);
-            bundle.type = type;
-            bundle.bundleContainer = this.container;
-            bundle.bundle.inject(this.container);
-            return bundle;
         }
     });
 }());

@@ -4,99 +4,112 @@
 // License: LGPL v2.1
 //
 (function () {
-    this.Search = new Class({
+    var Search = this.Search = new Class({
         "index": [],
         "groups": {},
         
-        "initialize": function (searchBox, container) {
-            // Check containers
-            if (typeOf(searchBox) !== "element" || typeOf(container) !== "element") {
-                throw "containerNotAnElement";
-            }
+        "initialize": function (search, searchResultContainer) {
+            var setting,
+                find;
             
-            this.searchBox = searchBox;
-            this.container = container;
+            this.search = search;
+            this.searchResultContainer = searchResultContainer;
             
-            var setting = new Setting(this.container);
-            this.nothingFound = setting.create("description", {
-                "text": "nothing found"
+            // Create setting for message "nothing found"
+            setting = new Setting(this.searchResultContainer);
+            this.nothingFound = setting.create({
+                "type": "description",
+                "text": "No matches were found."
             });
             this.nothingFound.bundle.set("id", "nothing-found");
             
-            this.searchBox.addEvent("keyup", (function (event) {
+            // Create event handlers
+            find = (function (event) {
                 this.find(event.target.get("value"));
-            }).bind(this));
+            }).bind(this);
             
-            this.searchBox.addEventListener("search", (function (event) {
-                this.find(event.target.get("value"));
-            }).bind(this), false);
+            this.search.addEvent("keyup", find);
+            this.search.addEventListener("search", find, false);
         },
         
         "add": function (setting) {
             this.index.push(setting);
         },
         
-        "find": function (string) {
-            this.index.each((function (setting) {
+        "find": function (searchString) {
+            var result,
+                groupName,
+                group,
+                row,
+                content
+            
+            // Reset all settings
+            this.index.each(function (setting) {
                 setting.bundle.inject(setting.bundleContainer);
-            }).bind(this));
+            });
             
-            Object.each(this.groups, (function (group) {
-                group.content.dispose();
-            }).bind(this));
+            // Hide all groups
+            Object.each(this.groups, function (group) {
+                group.dispose();
+            });
             
-            if (string.trim() === "") {
+            // Exit search mode
+            if (searchString.trim() === "") {
                 document.body.removeClass("searching");
-            } else {
-                document.body.addClass("searching");
-                var results = this.index.filter(function (setting) {
-                    if (setting.searchString.contains(string.trim().toLowerCase())) {
-                        if (setting.type !== "description") {
-                            return true;
-                        }
-                    }
-                });
-                
-                results.each((function (result) {
-                    // Create group
-                    var groupName = result.bundleContainer.parentNode.childNodes[0].get("text");
-                    if (this.groups[groupName] === undefined) {
-                        this.groups[groupName] = {};
-                        var group = this.groups[groupName];
-                        
-                        group.content = (new Element("table", {
-                            "class": "setting group"
-                        })).inject(this.container.parentNode.parentNode.parentNode.parentNode);
-                        
-                        var row = (new Element("tr")).inject(group.content);
-                        
-                        (new Element("td", {
-                            "class": "setting group-name",
-                            "text": groupName
-                        })).inject(row);
-                        
-                        var content = (new Element("td", {
-                            "class": "setting group-content"
-                        })).inject(row);
-                        
-                        group.setting = new Setting(content);
-                    } else {
-                        var group = this.groups[groupName];
-                        group.content.inject(this.container.parentNode.parentNode.parentNode.parentNode);
-                    }
-                    
-                    
-                    
-                    
-                    result.bundle.inject(group.content.childNodes[0]);
-                }).bind(this));
-                
-                if (results.length === 0) {
-                    this.nothingFound.bundle.addClass("show");
-                } else {
-                    this.nothingFound.bundle.removeClass("show");
-                }
+                return;
             }
+            
+            // Or enter search mode
+            document.body.addClass("searching");
+            result = this.index.filter(function (setting) {
+                if (setting.searchString.contains(searchString.trim().toLowerCase()) && setting.params.type !== "description") {
+                    return true;
+                }
+            });
+            
+            result.each((function (setting) {
+                // Create group if it doesn't exist already
+                if (this.groups[setting.params.group] === undefined) {
+                    this.groups[setting.params.group] = {};
+                    group = this.groups[setting.params.group];
+                    
+                    group.content = (new Element("table", {
+                        "class": "setting group"
+                    })).inject(this.searchResultContainer);
+                    
+                    row = (new Element("tr")).inject(group.content);
+                    
+                    (new Element("td", {
+                        "class": "setting group-name",
+                        "text": setting.params.group
+                    })).inject(row);
+                    
+                    content = (new Element("td", {
+                        "class": "setting group-content"
+                    })).inject(row);
+                    
+                    group.setting = new Setting(content);
+                } else {
+                    group = this.groups[setting.params.group];
+                    group.content.inject(this.searchResultContainer);
+                }
+                
+                
+                
+                
+                //result.bundle.inject(group.content.childNodes[0]);
+            }).bind(this));
+            
+            if (result.length === 0) {
+                this.nothingFound.bundle.addClass("show");
+            } else {
+                this.nothingFound.bundle.removeClass("show");
+            }
+        },
+        
+        "reset": function () {
+            this.search.set("value", "");
+            this.find("");
         }
     });
 }());
