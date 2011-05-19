@@ -54,7 +54,7 @@
 }
 
 .setting.element.description {
-    color: #666666;
+    color: #555555;
 }
 
 .setting.element.slider {
@@ -69,7 +69,7 @@
 }
 
 #nothing-found {
-    position: relative;
-    font-size: 20px;
     display: none;
+    margin-top: 10px;
+    font-size: 18px;
 }

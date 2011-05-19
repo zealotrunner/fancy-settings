@@ -116,6 +116,6 @@ body.searching .tab-content {
     display: none !important;
 }
 
-body.searching #search-results {
+body.searching #search-result-container {
     display: block !important;
 }
