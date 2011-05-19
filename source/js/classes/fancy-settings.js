@@ -9,12 +9,12 @@
         
         "initialize": function (name, icon) {
             // Set title and icon
-            $$("title")[0].set("text", name);
+            $("title").set("text", name);
             $("favicon").set("href", icon);
             $("icon").set("src", icon);
             
+            this.tab = new Tab($("tab-container"), $("content"));
             this.search = new Search($("search"), $("search-result-container"));
-            this.tab = new Tab($("tab-container"), $("tab-content-container"));
         },
         
         "create": function (params) {
@@ -31,9 +31,9 @@
                 
                 tab.content = this.tab.create();
                 tab.content.tab.set("text", params.tab);
-                tab.content.tab.addEvent("click", this.search.reset.bind(this.search));
-                tab.content = tab.content.content;
+                this.search.bind(tab.content.tab);
                 
+                tab.content = tab.content.content;
                 (new Element("h2", {
                     "text": params.tab
                 })).inject(tab.content);
@@ -67,9 +67,7 @@
             }
             
             // Create and index the setting
-            console.log(group.setting);
             bundle = group.setting.create(params);
-            bundle.searchString = (bundle.searchString + "•" + params.tab + "•" + params.group).toLowerCase();
             this.search.add(bundle);
             
             return bundle;
@@ -77,19 +75,17 @@
     });
     
     FancySettings.__proto__.initWithManifest = function (manifest, callback) {
-        var request,
-            response,
-            settings,
-            output;
-        
-        request = new Request({
-            "url": manifest
+        var request = new Request({
+            "url": manifest,
+            "noCache": true
         });
         request.addEvent("complete", function () {
-            response = request.response.text;
+            var response,
+                settings,
+                output;
             
             // Remove single line comments
-            response = response.replace(/\/\/.*\n/g, "");
+            response = request.response.text.replace(/\/\/.*\n/g, "");
             
             try {
                 response = JSON.parse(response);
@@ -97,21 +93,17 @@
                 throw "errorParsingManifest";
             }
             
-            settings = new FancySettings(response.name);
+            settings = new FancySettings(response.name, response.icon);
             settings.manifestOutput = {};
             
-            response.tabs.each(function (tab) {
-                tab.groups.each(function (group) {
-                    group.settings.each(function (setting) {
-                        output = settings.create(tab.name, group.name, setting.type, setting);
-                        if (typeOf(setting.name) === "string" && setting.name !== "") {
-                            settings.manifestOutput[setting.name] = output;
-                        }
-                    })
-                });
+            response.settings.each(function (params) {
+                output = settings.create(params);
+                if (params.name !== undefined) {
+                    settings.manifestOutput[params.name] = output;
+                }
             });
             
-            if (typeOf(callback) === "function") {
+            if (callback !== undefined) {
                 callback(settings);
             }
         });

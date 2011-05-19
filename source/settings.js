@@ -21,7 +21,7 @@ window.addEvent("domready", function () {
         "tab": "Tab 2",
         "group": "Group 2",
         "text": "mich auch"
-    });*/
+    });
     
     // Option 2: Do everything manually:
     // ---------------------------------
@@ -34,5 +34,5 @@ window.addEvent("domready", function () {
     // 
     // checkbox1.addEvent("action", function (value) {
     //     alert("you toggled me: " + value);
-    // });
+    // });*/
 });

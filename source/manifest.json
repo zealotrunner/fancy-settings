@@ -12,107 +12,94 @@
 // can access them in the settings.js file.
 {
     "name": "My Extension",
-    "tabs": [
+    "icon": "icon.png",
+    "settings": [
         {
-            "name": "Tab 1",
-            "groups": [
+            "tab": "Tab 1",
+            "group": "Group 1",
+            "name": "description1",
+            "type": "description",
+            "text": "This is a description. You can write any text inside of this."
+        },
+        {
+            "tab": "Tab 1",
+            "group": "Group 1",
+            "name": "button1",
+            "type": "button",
+            "label": "Describe the action:",
+            "text": "Go"
+        },
+        {
+            "tab": "Tab 1",
+            "group": "Group 2",
+            "name": "textBox1",
+            "type": "text",
+            "label": "Enter for information:",
+            "text": "e.g. \"sample\"",
+            "masked": false
+        },
+        {
+            "tab": "Tab 1",
+            "group": "Group 2",
+            "name": "checkbox1",
+            "type": "checkbox",
+            "label": "Enable this"
+        },
+        {
+            "tab": "Tab 2",
+            "group": "Group 3",
+            "name": "slider1",
+            "type": "slider",
+            "label": "Sound volume:",
+            "max": 100,
+            "min": 0,
+            "step": 1
+        },
+        {
+            "tab": "Tab 2",
+            "group": "Group 3",
+            "name": "popupButton1",
+            "type": "popupButton",
+            "label": "Soup should be:",
+            "options": [
                 {
-                    "name": "Group 1",
-                    "settings": [
-                        {
-                            "name": "description1",
-                            "type": "description",
-                            "text": "This is a description. You can write any text inside of this."
-                        },
-                        {
-                            "name": "button1",
-                            "type": "button",
-                            "label": "Describe the action:",
-                            "text": "Go"
-                        }
-                    ]
+                    "value": "hot",
+                    "text": "Hot and yummy"
                 },
                 {
-                    "name": "Group 2",
-                    "settings": [
-                        {
-                            "name": "textBox1",
-                            "type": "text",
-                            "label": "Enter for information:",
-                            "text": "e.g. \"sample\"",
-                            "masked": false
-                        },
-                        {
-                            "name": "checkbox1",
-                            "type": "checkbox",
-                            "label": "Enable this"
-                        }
-                    ]
+                    "value": "cold"
                 }
             ]
         },
         {
-            "name": "Tab 2",
-            "groups": [
+            "tab": "Tab 2",
+            "group": "Group 4",
+            "name": "listBox1",
+            "type": "listBox",
+            "label": "Soup should be:",
+            "options": [
                 {
-                    "name": "Group 3",
-                    "settings": [
-                        {
-                            "name": "slider1",
-                            "type": "slider",
-                            "label": "Sound volume:",
-                            "max": 100,
-                            "min": 0,
-                            "step": 1
-                        },
-                        {
-                            "name": "popupButton1",
-                            "type": "popupButton",
-                            "label": "Soup should be:",
-                            "options": [
-                                {
-                                    "value": "hot",
-                                    "text": "Hot and yummy"
-                                },
-                                {
-                                    "value": "cold"
-                                }
-                            ]
-                        }
-                    ]
+                    "value": "hot",
+                    "text": "Hot and yummy"
                 },
                 {
-                    "name": "Group 4",
-                    "settings": [
-                        {
-                            "name": "listBox1",
-                            "type": "listBox",
-                            "label": "Soup should be:",
-                            "options": [
-                                {
-                                    "value": "hot",
-                                    "text": "Hot and yummy"
-                                },
-                                {
-                                    "value": "cold"
-                                }
-                            ]
-                        },
-                        {
-                            "name": "radioButtons1",
-                            "type": "radioButtons",
-                            "label": "Soup should be:",
-                            "options": [
-                                {
-                                    "value": "hot",
-                                    "text": "Hot and yummy"
-                                },
-                                {
-                                    "value": "cold"
-                                }
-                            ]
-                        }
-                    ]
+                    "value": "cold"
+                }
+            ]
+        },
+        {
+            "tab": "Tab 2",
+            "group": "Group 4",
+            "name": "radioButtons1",
+            "type": "radioButtons",
+            "label": "Soup should be:",
+            "options": [
+                {
+                    "value": "hot",
+                    "text": "Hot and yummy"
+                },
+                {
+                    "value": "cold"
                 }
             ]
         }

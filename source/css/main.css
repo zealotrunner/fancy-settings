@@ -91,7 +91,7 @@ body.searching #tab-container .tab.active {
     box-shadow: none;
 }
 
-#tab-content-container {
+#content {
     position: absolute;
     top: 0;
     bottom: 0;

@@ -28,8 +28,18 @@
                 this.find(event.target.get("value"));
             }).bind(this);
             
-            this.search.addEvent("keyup", find);
+            this.search.addEvent("keyup", (function (event) {
+                if (event.key === "esc") {
+                    this.reset();
+                } else {
+                    find(event);
+                }
+            }).bind(this));
             this.search.addEventListener("search", find, false);
+        },
+        
+        "bind": function (tab) {
+            tab.addEvent("click", this.reset.bind(this));
         },
         
         "add": function (setting) {
@@ -62,42 +72,38 @@
             // Or enter search mode
             document.body.addClass("searching");
             result = this.index.filter(function (setting) {
-                if (setting.searchString.contains(searchString.trim().toLowerCase()) && setting.params.type !== "description") {
+                if (setting.params.searchString.contains(searchString.trim().toLowerCase())) {
                     return true;
                 }
             });
             
             result.each((function (setting) {
+                var group,
+                    row;
+                
                 // Create group if it doesn't exist already
                 if (this.groups[setting.params.group] === undefined) {
-                    this.groups[setting.params.group] = {};
-                    group = this.groups[setting.params.group];
-                    
-                    group.content = (new Element("table", {
+                    this.groups[setting.params.group] = (new Element("table", {
                         "class": "setting group"
                     })).inject(this.searchResultContainer);
+                    group = this.groups[setting.params.group];
                     
-                    row = (new Element("tr")).inject(group.content);
+                    var row = (new Element("tr")).inject(group);
                     
                     (new Element("td", {
                         "class": "setting group-name",
                         "text": setting.params.group
                     })).inject(row);
                     
-                    content = (new Element("td", {
+                    group.content = (new Element("td", {
                         "class": "setting group-content"
                     })).inject(row);
-                    
-                    group.setting = new Setting(content);
                 } else {
                     group = this.groups[setting.params.group];
-                    group.content.inject(this.searchResultContainer);
+                    group.inject(this.searchResultContainer);
                 }
                 
-                
-                
-                
-                //result.bundle.inject(group.content.childNodes[0]);
+                setting.bundle.inject(group.content);
             }).bind(this));
             
             if (result.length === 0) {
