@@ -4,27 +4,22 @@
 // License: MIT-license
 //
 (function () {
-    var Store = this.Store = function (name) {
+    var Store = this.Store = function (name, defaults) {
+        var key;
         this.name = name;
-    };
-    
-    Store.__proto__.initWithDefaults = function (name, defaults) {
-        var store,
-            key;
         
-        store = new Store(name);
-        for (key in defaults) {
-            if (defaults.hasOwnProperty(key) && store.get(key) === undefined) {
-                store.set(key, defaults[key]);
+        if (defaults !== undefined) {
+            for (key in defaults) {
+                if (defaults.hasOwnProperty(key) && this.get(key) === undefined) {
+                    this.set(key, defaults[key]);
+                }
             }
         }
-        
-        return store;
     };
     
     Store.prototype.get = function (name) {
         name = "store." + this.name + "." + name;
-        if (!localStorage.hasOwnProperty(name)) { return undefined; }
+        if (localStorage.getItem(name) === null) { return undefined; }
         try {
             return JSON.parse(localStorage.getItem(name));
         } catch (e) {

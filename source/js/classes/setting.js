@@ -5,29 +5,37 @@
 //
 (function () {
     var settings,
-        Bundle,
-        Setting;
+        Bundle;
     
     settings = new Store("settings");
     Bundle = new Class({
+        // Methods:
+        //  - initialize
+        //  - createDOM
+        //  - setupDOM
+        //  - addEvents
+        //  - get
+        //  - set
         "Implements": Events,
-        "searchString": "",
         
         "initialize": function (params) {
             this.params = params;
+            this.params.searchString = "•" + this.params.tab + "•" + this.params.group + "•";
             
             this.createDOM();
             this.setupDOM();
             this.addEvents();
             
-            if (typeOf(this.params.name) === "string" && this.params.name !== "") {
+            if (this.params.name !== undefined) {
                 this.set(settings.get(this.params.name), true);
             }
+            
+            this.params.searchString = this.params.searchString.toLowerCase();
         },
         
         "addEvents": function () {
             this.element.addEvent("change", (function (event) {
-                if (typeOf(this.params.name) === "string" && this.params.name !== "") {
+                if (this.params.name !== undefined) {
                     settings.set(this.params.name, this.get());
                 }
                 
@@ -39,12 +47,10 @@
             return this.element.get("value");
         },
         
-        "set": function (value, intern) {
-            value = ((typeOf(value) === "string") ? value : "");
-            
+        "set": function (value, noChangeEvent) {
             this.element.set("value", value);
             
-            if (!intern) {
+            if (noChangeEvent !== true) {
                 this.element.fireEvent("change");
             }
             
@@ -55,9 +61,13 @@
     Bundle.Description = new Class({
         // text
         "Extends": Bundle,
+        "addEvents": undefined,
+        "get": undefined,
+        "set": undefined,
         
         "initialize": function (params) {
             this.params = params;
+            this.params.searchString = "";
             
             this.createDOM();
             this.setupDOM();
@@ -78,7 +88,7 @@
         },
         
         "setupDOM": function () {
-            if (typeOf(this.params.text) === "string") {
+            if (this.params.text !== undefined) {
                 this.element.set("text", this.params.text);
             }
             
@@ -91,13 +101,18 @@
         // label, text
         // action -> click
         "Extends": Bundle,
+        "get": undefined,
+        "set": undefined,
         
         "initialize": function (params) {
             this.params = params;
+            this.params.searchString = "•" + this.params.tab + "•" + this.params.group + "•";
             
             this.createDOM();
             this.setupDOM();
             this.addEvents();
+            
+            this.params.searchString = this.params.searchString.toLowerCase();
         },
         
         "createDOM": function () {
@@ -120,15 +135,15 @@
         },
         
         "setupDOM": function () {
-            if (typeOf(this.params.label) === "string") {
+            if (this.params.label !== undefined) {
                 this.label.set("text", this.params.label);
                 this.label.inject(this.container);
-                this.searchString += "•" + this.params.label;
+                this.params.searchString += this.params.label + "•";
             }
             
-            if (typeOf(this.params.text) === "string") {
+            if (this.params.text !== undefined) {
                 this.element.set("value", this.params.text);
-                this.searchString += "•" + this.params.text;
+                this.params.searchString += this.params.text + "•";
             }
             
             this.element.inject(this.container);
@@ -167,20 +182,20 @@
         },
         
         "setupDOM": function () {
-            if (typeOf(this.params.label) === "string") {
+            if (this.params.label !== undefined) {
                 this.label.set("text", this.params.label);
                 this.label.inject(this.container);
-                this.searchString += "•" + this.params.label;
+                this.params.searchString += this.params.label + "•";
             }
             
-            if (typeOf(this.params.text) === "string") {
+            if (this.params.text !== undefined) {
                 this.element.set("placeholder", this.params.text);
-                this.searchString += "•" + this.params.text;
+                this.params.searchString += this.params.text + "•";
             }
             
             if (this.params.masked === true) {
                 this.element.set("type", "password");
-                this.searchString += "•" + "password";
+                this.params.searchString += "password" + "•";
             }
             
             this.element.inject(this.container);
@@ -189,8 +204,7 @@
         
         "addEvents": function () {
             var change = (function (event) {
-                if (typeOf(this.params.name) === "string" && this.params.name !== "") {
-                    console.log(this);
+                if (this.params.name !== undefined) {
                     settings.set(this.params.name, this.get());
                 }
                 
@@ -233,10 +247,10 @@
             this.element.inject(this.container);
             this.container.inject(this.bundle);
             
-            if (typeOf(this.params.label) === "string") {
+            if (this.params.label !== undefined) {
                 this.label.set("text", this.params.label);
                 this.label.inject(this.container);
-                this.searchString += "•" + this.params.label;
+                this.params.searchString += this.params.label + "•";
             }
         },
         
@@ -244,12 +258,10 @@
             return this.element.get("checked");
         },
         
-        "set": function (value, intern) {
-            value = ((typeOf(value) === "boolean") ? value : false);
-            
+        "set": function (value, noChangeEvent) {
             this.element.set("checked", value);
             
-            if (!intern) {
+            if (noChangeEvent !== true) {
                 this.element.fireEvent("change");
             }
             
@@ -282,21 +294,21 @@
         },
         
         "setupDOM": function () {
-            if (typeOf(this.params.label) === "string") {
+            if (this.params.label !== undefined) {
                 this.label.set("text", this.params.label);
                 this.label.inject(this.container);
-                this.searchString += "•" + this.params.label;
+                this.params.searchString += this.params.label + "•";
             }
             
-            if (typeOf(this.params.max) === "number") {
+            if (this.params.max !== undefined) {
                 this.element.set("max", this.params.max);
             }
             
-            if (typeOf(this.params.min) === "number") {
+            if (this.params.min !== undefined) {
                 this.element.set("min", this.params.min);
             }
             
-            if (typeOf(this.params.step) === "number") {
+            if (this.params.step !== undefined) {
                 this.element.set("step", this.params.step);
             }
             
@@ -308,13 +320,10 @@
             return Number.from(this.element.get("value"));
         },
         
-        "set": function (value, intern) {
-            var min = ((typeOf(this.params.min) === "number") ? this.params.min : 0);
-            value = ((typeOf(value) === "number") ? value : min);
-            
+        "set": function (value, noChangeEvent) {
             this.element.set("value", value);
             
-            if (!intern) {
+            if (noChangeEvent !== true) {
                 this.element.fireEvent("change");
             }
             
@@ -326,18 +335,6 @@
         // name, label, options[{value, text}]
         // action -> change
         "Extends": Bundle,
-        
-        "initialize": function (params) {
-            this.params = params;
-            
-            this.createDOM();
-            this.setupDOM();
-            this.addEvents();
-            
-            if (typeOf(this.params.name) === "string" && this.params.name !== "") {
-                this.set(settings.get(this.params.name), true);
-            }
-        },
         
         "createDOM": function () {
             this.bundle = new Element("div", {
@@ -356,25 +353,22 @@
                 "class": "setting label popup-button"
             });
             
+            if (this.params.options === undefined) { return; }
             this.params.options.each((function (option) {
-                option = ((typeOf(option) === "object") ? option : {});
-                
-                if (typeOf(option.value) === "string" || typeOf(option.text) === "string") {
-                    this.searchString += "•" + ((typeOf(option.text) === "string") ? option.text : option.value);
-                }
+                this.params.searchString += (option.text || option.value) + "•";
                 
                 (new Element("option", {
                     "value": option.value,
-                    "text": ((typeOf(option.text) === "string") ? option.text : option.value)
+                    "text": option.text || option.value
                 })).inject(this.element);
             }).bind(this));
         },
         
         "setupDOM": function () {
-            if (typeOf(this.params.label) === "string") {
+            if (this.params.label !== undefined) {
                 this.label.set("text", this.params.label);
                 this.label.inject(this.container);
-                this.searchString += "•" + this.params.label;
+                this.params.searchString += this.params.label + "•";
             }
             
             this.element.inject(this.container);
@@ -405,16 +399,13 @@
                 "class": "setting label list-box"
             });
             
+            if (this.params.options === undefined) { return; }
             this.params.options.each((function (option) {
-                option = ((typeOf(option) === "object") ? option : {});
-                
-                if (typeOf(option.value) === "string" || typeOf(option.text) === "string") {
-                    this.searchString += "•" + ((typeOf(option.text) === "string") ? option.text : option.value);
-                }
+                this.params.searchString += (option.text || option.value) + "•";
                 
                 (new Element("option", {
                     "value": option.value,
-                    "text": ((typeOf(option.text) === "string") ? option.text : option.value)
+                    "text": option.text || option.value
                 })).inject(this.element);
             }).bind(this));
         },
@@ -429,19 +420,9 @@
         // action -> change
         "Extends": Bundle,
         
-        "initialize": function (params) {
-            this.params = params;
-            
-            this.createDOM();
-            this.setupDOM();
-            this.addEvents();
-            
-            if (typeOf(this.params.name) === "string" && this.params.name !== "") {
-                this.set(settings.get(this.params.name), true);
-            }
-        },
-        
         "createDOM": function () {
+            var settingID = String.uniqueID();
+            
             this.bundle = new Element("div", {
                 "class": "setting bundle radio-buttons"
             });
@@ -454,16 +435,15 @@
             this.elements = [];
             this.labels = [];
             
-            var settingID = String.uniqueID();
+            if (this.params.options === undefined) { return; }
             this.params.options.each((function (option) {
-                option = ((typeOf(option) === "object") ? option : {});
+                var optionID,
+                    container;
                 
-                if (typeOf(option.value) === "string" || typeOf(option.text) === "string") {
-                    this.searchString += "•" + ((typeOf(option.text) === "string") ? option.text : option.value);
-                }
+                this.params.searchString += (option.text || option.value) + "•";
                 
-                var optionID = String.uniqueID(),
-                    container = (new Element("div", {
+                optionID = String.uniqueID();
+                container = (new Element("div", {
                     "class": "setting container radio-buttons"
                 })).inject(this.bundle);
                 this.containers.push(container);
@@ -479,22 +459,22 @@
                 this.labels.push((new Element("label", {
                     "class": "setting element-label radio-buttons",
                     "for": optionID,
-                    "text": ((typeOf(option.text) === "string") ? option.text : option.value)
+                    "text": option.text || option.value
                 })).inject(container));
             }).bind(this));
         },
         
         "setupDOM": function () {
-            if (typeOf(this.params.label) === "string") {
+            if (this.params.label !== undefined) {
                 this.label.set("text", this.params.label);
                 this.label.inject(this.bundle, "top");
-                this.searchString += "•" + this.params.label;
+                this.params.searchString += this.params.label + "•";
             }
         },
         
         "addEvents": function () {
             this.bundle.addEvent("change", (function (event) {
-                if (typeOf(this.params.name) === "string" && this.params.name !== "") {
+                if (this.params.name !== undefined) {
                     settings.set(this.params.name, this.get());
                 }
                 
@@ -506,19 +486,16 @@
             var checkedEl = this.elements.filter((function (el) {
                 return el.get("checked");
             }).bind(this));
-            
             return (checkedEl[0] && checkedEl[0].get("value"));
         },
         
-        "set": function (value, intern) {
-            value = ((typeOf(value) === "string") ? value : "");
-            
+        "set": function (value, noChangeEvent) {
             var desiredEl = this.elements.filter((function (el) {
                 return (el.get("value") === value);
             }).bind(this));
             desiredEl[0] && desiredEl[0].set("checked", true);
             
-            if (!intern) {
+            if (noChangeEvent !== true) {
                 this.bundle.fireEvent("change");
             }
             
@@ -526,7 +503,7 @@
         }
     });
     
-    Setting = this.Setting = new Class({
+    this.Setting = new Class({
         "initialize": function (container) {
             this.container = container;
         },
@@ -547,13 +524,13 @@
                 "radioButtons": "RadioButtons"
             };
             
-            params.searchString = "";
-            params.container = this.container;
             if (Object.keys(types).contains(params.type)) {
                 bundle = new Bundle[types[params.type]](params);
                 bundle.bundleContainer = this.container;
                 bundle.bundle.inject(this.container);
                 return bundle;
+            } else {
+                throw "invalidType";
             }
         }
     });

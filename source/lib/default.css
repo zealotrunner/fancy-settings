@@ -273,6 +273,25 @@ caption {
     text-shadow: black 0 -1px 0;
 }
 
+.no-fancy {
+    text-shadow: none;
+}
+
+.select {
+    cursor: auto;
+    user-select: auto;
+    -webkit-user-select: auto;
+    -moz-user-select: auto;
+    -o-user-select: auto;
+}
+
+img.select, .select img {
+    user-drag: auto;
+    -webkit-user-drag: auto;
+    -moz-user-drag: auto;
+    -o-user-drag: auto;
+}
+
 .no-select {
     cursor: default;
     user-select: none;
@@ -286,6 +305,10 @@ img.no-select, .no-select img {
     -webkit-user-drag: none;
     -moz-user-drag: none;
     -o-user-drag: none;
+}
+
+.focus:focus, .focus :focus {
+    outline: auto;
 }
 
 .no-focus:focus, .no-focus :focus {

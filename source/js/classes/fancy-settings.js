@@ -67,6 +67,7 @@
             }
             
             // Create and index the setting
+            console.log(group.setting);
             bundle = group.setting.create(params);
             bundle.searchString = (bundle.searchString + "•" + params.tab + "•" + params.group).toLowerCase();
             this.search.add(bundle);
@@ -82,7 +83,7 @@
             output;
         
         request = new Request({
-            "url": name
+            "url": manifest
         });
         request.addEvent("complete", function () {
             response = request.response.text;

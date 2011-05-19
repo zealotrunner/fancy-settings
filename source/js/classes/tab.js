@@ -4,10 +4,7 @@
 // License: LGPL v2.1
 //
 (function () {
-    var Bundle,
-        Tab;
-    
-    Bundle = new Class({
+    var Bundle = new Class({
         "initialize": function (creator) {
             this.creator = creator;
             
@@ -23,19 +20,19 @@
             if (this.creator.activeBundle && this.creator.activeBundle !== this) {
                 this.creator.activeBundle.deactivate();
             }
-            this.tab.addClass("selected");
+            this.tab.addClass("active");
             this.content.addClass("show");
             this.creator.activeBundle = this;
         },
         
         "deactivate": function () {
-            this.tab.removeClass("selected");
+            this.tab.removeClass("active");
             this.content.removeClass("show");
             this.creator.activeBundle = null;
         }
     });
     
-    Tab = this.Tab = new Class({
+    this.Tab = new Class({
         "activeBundle": null,
         
         "initialize": function (tabContainer, tabContentContainer) {
