@@ -4,7 +4,7 @@
 // License: LGPL v2.1
 //
 (function () {
-    var Search = this.Search = new Class({
+    this.Search = new Class({
         "index": [],
         "groups": {},
         
@@ -115,6 +115,7 @@
         
         "reset": function () {
             this.search.set("value", "");
+            this.search.blur();
             this.find("");
         }
     });

@@ -19,7 +19,7 @@
 }
 
 .setting.group-name {
-    width: 130px;
+    width: 140px;
     padding: 0;
     font-size: 14px;
     font-weight: bold;
@@ -27,34 +27,39 @@
 }
 
 .setting.bundle {
+    max-width: 600px;
     margin-bottom: 5px;
+}
+
+.setting.bundle.description {
+    margin-left: 2px;
+    padding-left: 10px;
+    border-left: 1px solid #C2C2C2;
+    color: #555555;
 }
 
 .setting.bundle.list-box {
     margin-bottom: 10px;
 }
 
+.setting.label.radio-buttons + .setting.container.radio-buttons {
+    margin-top: 3px;
+}
+
 .setting.label, .setting.element-label {
-    margin-right: 5px;
+    margin-right: 7px;
     font-size: 13px;
     font-weight: normal;
 }
 
 .setting.label.checkbox, .setting.element-label {
     margin-left: 5px;
+    margin-right: 0;
 }
 
 .setting.label.checkbox {
     position: relative;
     top: 1px;
-}
-
-.setting.label.radio-buttons + .setting.container.radio-buttons {
-    margin-top: 3px;
-}
-
-.setting.element.description {
-    color: #555555;
 }
 
 .setting.element.slider {
@@ -63,13 +68,18 @@
 }
 
 .setting.element.list-box {
+    display: block;
     height: 100px;
     width: 100%;
-    display: block;
 }
 
 #nothing-found {
     display: none;
+    margin: 0;
     margin-top: 10px;
+    padding: 0;
+    border: none;
     font-size: 18px;
+    font-weight: lighter;
+    color: #999999;
 }

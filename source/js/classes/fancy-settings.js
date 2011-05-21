@@ -74,39 +74,22 @@
         }
     });
     
-    FancySettings.__proto__.initWithManifest = function (manifest, callback) {
-        var request = new Request({
-            "url": manifest,
-            "noCache": true
-        });
-        request.addEvent("complete", function () {
-            var response,
-                settings,
-                output;
-            
-            // Remove single line comments
-            response = request.response.text.replace(/\/\/.*\n/g, "");
-            
-            try {
-                response = JSON.parse(response);
-            } catch (e) {
-                throw "errorParsingManifest";
-            }
-            
-            settings = new FancySettings(response.name, response.icon);
-            settings.manifestOutput = {};
-            
-            response.settings.each(function (params) {
-                output = settings.create(params);
-                if (params.name !== undefined) {
-                    settings.manifestOutput[params.name] = output;
-                }
-            });
-            
-            if (callback !== undefined) {
-                callback(settings);
+    FancySettings.__proto__.initWithManifest = function (callback) {
+        var settings,
+            output;
+        
+        settings = new FancySettings(manifest.name, manifest.icon);
+        settings.manifest = {};
+        
+        manifest.settings.each(function (params) {
+            output = settings.create(params);
+            if (params.name !== undefined) {
+                settings.manifest[params.name] = output;
             }
         });
-        request.send();
+        
+        if (callback !== undefined) {
+            callback(settings);
+        }
     };
 }());

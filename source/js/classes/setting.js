@@ -9,6 +9,12 @@
     
     settings = new Store("settings");
     Bundle = new Class({
+        // Attributes:
+        // - tab
+        // - group
+        // - name
+        // - type
+        //
         // Methods:
         //  - initialize
         //  - createDOM
@@ -89,7 +95,7 @@
         
         "setupDOM": function () {
             if (this.params.text !== undefined) {
-                this.element.set("text", this.params.text);
+                this.element.set("html", this.params.text);
             }
             
             this.element.inject(this.container);
@@ -136,7 +142,7 @@
         
         "setupDOM": function () {
             if (this.params.label !== undefined) {
-                this.label.set("text", this.params.label);
+                this.label.set("html", this.params.label);
                 this.label.inject(this.container);
                 this.params.searchString += this.params.label + "•";
             }
@@ -158,7 +164,7 @@
     });
     
     Bundle.Text = new Class({
-        // name, label, text, masked
+        // label, text, masked
         // action -> change & keyup
         "Extends": Bundle,
         
@@ -183,7 +189,7 @@
         
         "setupDOM": function () {
             if (this.params.label !== undefined) {
-                this.label.set("text", this.params.label);
+                this.label.set("html", this.params.label);
                 this.label.inject(this.container);
                 this.params.searchString += this.params.label + "•";
             }
@@ -217,7 +223,7 @@
     });
     
     Bundle.Checkbox = new Class({
-        // name, label
+        // label
         // action -> change
         "Extends": Bundle,
         
@@ -248,7 +254,7 @@
             this.container.inject(this.bundle);
             
             if (this.params.label !== undefined) {
-                this.label.set("text", this.params.label);
+                this.label.set("html", this.params.label);
                 this.label.inject(this.container);
                 this.params.searchString += this.params.label + "•";
             }
@@ -270,7 +276,7 @@
     });
     
     Bundle.Slider = new Class({
-        // name, label, max, min, step
+        // label, max, min, step
         // action -> change
         "Extends": Bundle,
         
@@ -295,7 +301,7 @@
         
         "setupDOM": function () {
             if (this.params.label !== undefined) {
-                this.label.set("text", this.params.label);
+                this.label.set("html", this.params.label);
                 this.label.inject(this.container);
                 this.params.searchString += this.params.label + "•";
             }
@@ -332,7 +338,7 @@
     });
     
     Bundle.PopupButton = new Class({
-        // name, label, options[{value, text}]
+        // label, options[{value, text}]
         // action -> change
         "Extends": Bundle,
         
@@ -366,7 +372,7 @@
         
         "setupDOM": function () {
             if (this.params.label !== undefined) {
-                this.label.set("text", this.params.label);
+                this.label.set("html", this.params.label);
                 this.label.inject(this.container);
                 this.params.searchString += this.params.label + "•";
             }
@@ -377,7 +383,7 @@
     });
     
     Bundle.ListBox = new Class({
-        // name, label, options[{value, text}]
+        // label, options[{value, text}]
         // action -> change
         "Extends": Bundle.PopupButton,
         
@@ -416,7 +422,7 @@
     });
     
     Bundle.RadioButtons = new Class({
-        // name, label, options[{value, text}]
+        // label, options[{value, text}]
         // action -> change
         "Extends": Bundle,
         
@@ -466,7 +472,7 @@
         
         "setupDOM": function () {
             if (this.params.label !== undefined) {
-                this.label.set("text", this.params.label);
+                this.label.set("html", this.params.label);
                 this.label.inject(this.bundle, "top");
                 this.params.searchString += this.params.label + "•";
             }

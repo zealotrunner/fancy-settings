@@ -3,6 +3,10 @@
 // https://github.com/frankkohlhepp/fancy-settings
 // License: LGPL v2.1
 */
+.fancy {
+    text-shadow: #F5F5F5 0 1px 0;
+}
+
 #sidebar {
     position: absolute;
     background-image: linear-gradient(top, #EDEDED, #F5F5F5);
@@ -20,9 +24,9 @@
     );
     background-image: -o-linear-gradient(top, #EDEDED, #F5F5F5);
     width: 219px;
-    height: 100%;
     top: 0;
     left: 0;
+    bottom: 0;
     border-right: 1px solid #C2C2C2;
     box-shadow: inset -8px 0 30px -30px black;
 }
@@ -45,8 +49,9 @@
 
 #tab-container {
     position: absolute;
-    width: 100%;
     top: 50px;
+    left: 0;
+    right: 0;
     bottom: 0;
     overflow-y: auto;
     overflow-x: hidden;
@@ -79,7 +84,7 @@
     background-color: #D4D4D4;
     border-color: #BFBFBF;
     color: black;
-    text-shadow: none;
+    text-shadow: #DBDBDB 0 1px 0;
     box-shadow: inset -12px 0 30px -30px black;
 }
 
@@ -94,11 +99,10 @@ body.searching #tab-container .tab.active {
 #content {
     position: absolute;
     top: 0;
-    bottom: 0;
     left: 220px;
     right: 0;
-    overflow-y: auto;
-    overflow-x: auto;
+    bottom: 0;
+    overflow: auto;
 }
 
 .tab-content {
@@ -106,8 +110,8 @@ body.searching #tab-container .tab.active {
     position: absolute;
     width: 840px;
     top: 0;
-    bottom: 0;
     left: 0;
+    bottom: 0;
     padding: 20px;
     padding-top: 15px;
 }
