@@ -6,6 +6,7 @@ Welcome to Fancy Settings! Are you ready for tabs, groups, search, good style?
 Let's get started, it only takes a few minutes...
 
 [Getting started](https://github.com/frankkohlhepp/fancy-settings/wiki)
+[View Sample](http://f12k.org/fancy/)
 
 ### License
 Fancy Settings is licensed under the **LGPL 2.1**.  
