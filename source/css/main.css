@@ -9,6 +9,7 @@
 
 #sidebar {
     position: absolute;
+    background-color: #EDEDED;
     background-image: linear-gradient(top, #EDEDED, #F5F5F5);
     background-image: -webkit-gradient(
         linear,
