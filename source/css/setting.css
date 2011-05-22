@@ -31,13 +31,6 @@
     margin-bottom: 5px;
 }
 
-.setting.bundle.description {
-    margin-left: 2px;
-    padding-left: 10px;
-    border-left: 1px solid #C2C2C2;
-    color: #555555;
-}
-
 .setting.bundle.list-box {
     margin-bottom: 10px;
 }
@@ -75,10 +68,7 @@
 
 #nothing-found {
     display: none;
-    margin: 0;
     margin-top: 10px;
-    padding: 0;
-    border: none;
     font-size: 18px;
     font-weight: lighter;
     color: #999999;
