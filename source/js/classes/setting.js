@@ -276,7 +276,7 @@
     });
     
     Bundle.Slider = new Class({
-        // label, max, min, step
+        // label, max, min, step, display
         // action -> change
         "Extends": Bundle,
         
@@ -296,6 +296,11 @@
             
             this.label = new Element("label", {
                 "class": "setting label slider"
+            });
+            
+            this.display = new Element("span", {
+                "class": "setting display slider",
+                "text": "0"
             });
         },
         
@@ -319,7 +324,21 @@
             }
             
             this.element.inject(this.container);
+            if (this.params.display !== false) {
+                this.display.inject(this.container);
+            }
             this.container.inject(this.bundle);
+        },
+        
+        "addEvents": function () {
+            this.element.addEvent("change", (function (event) {
+                if (this.params.name !== undefined) {
+                    settings.set(this.params.name, this.get());
+                }
+                
+                this.display.set("text", this.get());
+                this.fireEvent("action", this.get());
+            }).bind(this));
         },
         
         "get": function () {
@@ -331,6 +350,8 @@
             
             if (noChangeEvent !== true) {
                 this.element.fireEvent("change");
+            } else {
+                this.display.set("text", value);
             }
             
             return this;
