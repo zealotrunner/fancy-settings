@@ -276,7 +276,7 @@
     });
     
     Bundle.Slider = new Class({
-        // label, max, min, step, display
+        // label, max, min, step, display, displayModifier
         // action -> change
         "Extends": Bundle,
         
@@ -299,8 +299,7 @@
             });
             
             this.display = new Element("span", {
-                "class": "setting display slider",
-                "text": "0"
+                "class": "setting display slider"
             });
         },
         
@@ -325,6 +324,11 @@
             
             this.element.inject(this.container);
             if (this.params.display !== false) {
+                if (typeOf(this.params.displayModifier) === "function") {
+                    this.display.set("text", this.params.displayModifier(0));
+                } else {
+                    this.display.set("text", 0);
+                }
                 this.display.inject(this.container);
             }
             this.container.inject(this.bundle);
@@ -336,7 +340,11 @@
                     settings.set(this.params.name, this.get());
                 }
                 
-                this.display.set("text", this.get());
+                if (typeOf(this.params.displayModifier) === "function") {
+                    this.display.set("text", this.params.displayModifier(this.get()));
+                } else {
+                    this.display.set("text", this.get());
+                }
                 this.fireEvent("action", this.get());
             }).bind(this));
         },
@@ -351,7 +359,11 @@
             if (noChangeEvent !== true) {
                 this.element.fireEvent("change");
             } else {
-                this.display.set("text", value);
+                if (typeOf(this.params.displayModifier) === "function") {
+                    this.display.set("text", this.params.displayModifier(Number.from(value)));
+                } else {
+                    this.display.set("text", Number.from(value));
+                }
             }
             
             return this;

@@ -46,9 +46,13 @@ this.manifest = {
             "name": "slider1",
             "type": "slider",
             "label": "Sound volume:",
-            "max": 100,
+            "max": 1,
             "min": 0,
-            "step": 1
+            "step": 0.01,
+            "display": true,
+            "displayModifier": function (value) {
+                return (value * 100).floor() + "%";
+            }
         },
         {
             "tab": "Details",
