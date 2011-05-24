@@ -324,7 +324,7 @@
             
             this.element.inject(this.container);
             if (this.params.display !== false) {
-                if (typeOf(this.params.displayModifier) === "function") {
+                if (this.params.displayModifier !== undefined) {
                     this.display.set("text", this.params.displayModifier(0));
                 } else {
                     this.display.set("text", 0);
@@ -340,7 +340,7 @@
                     settings.set(this.params.name, this.get());
                 }
                 
-                if (typeOf(this.params.displayModifier) === "function") {
+                if (this.params.displayModifier !== undefined) {
                     this.display.set("text", this.params.displayModifier(this.get()));
                 } else {
                     this.display.set("text", this.get());
@@ -359,7 +359,7 @@
             if (noChangeEvent !== true) {
                 this.element.fireEvent("change");
             } else {
-                if (typeOf(this.params.displayModifier) === "function") {
+                if (this.params.displayModifier !== undefined) {
                     this.display.set("text", this.params.displayModifier(Number.from(value)));
                 } else {
                     this.display.set("text", Number.from(value));
@@ -394,6 +394,7 @@
             
             if (this.params.options === undefined) { return; }
             this.params.options.each((function (option) {
+                if (typeOf(option) === "string") { option = {"value": option}; }
                 this.params.searchString += (option.text || option.value) + "•";
                 
                 (new Element("option", {
@@ -440,6 +441,7 @@
             
             if (this.params.options === undefined) { return; }
             this.params.options.each((function (option) {
+                if (typeOf(option) === "string") { option = {"value": option}; }
                 this.params.searchString += (option.text || option.value) + "•";
                 
                 (new Element("option", {
@@ -479,6 +481,7 @@
                 var optionID,
                     container;
                 
+                if (typeOf(option) === "string") { option = {"value": option}; }
                 this.params.searchString += (option.text || option.value) + "•";
                 
                 optionID = String.uniqueID();
@@ -563,7 +566,7 @@
                 "radioButtons": "RadioButtons"
             };
             
-            if (Object.keys(types).contains(params.type)) {
+            if (types.hasOwnProperty(params.type)) {
                 bundle = new Bundle[types[params.type]](params);
                 bundle.bundleContainer = this.container;
                 bundle.bundle.inject(this.container);

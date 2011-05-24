@@ -11,27 +11,21 @@ window.addEvent("domready", function () {
     var settings = new FancySettings("My Extension", "icon.png");
     
     var textBox1 = settings.create({
-        "tab": "Information",
-        "group": "Login",
+        "tab": i18n.get("information"),
+        "group": i18n.get("login"),
         "name": "textBox1",
         "type": "text",
-        "label": "Password:",
-        "text": "6 - 12 characters",
+        "label": i18n.get("password"),
+        "text": i18n.get("x-characters"),
         "masked": true
     });
     
     var description1 = settings.create({
-        "tab": "Information",
-        "group": "Login",
+        "tab": i18n.get("information"),
+        "group": i18n.get("login"),
         "name": "description1",
         "type": "description",
-        "text": "This is a description. You can write any text inside of this.<br>\
-        Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut\
-        labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores\
-        et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem\
-        ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et\
-        dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum.\
-        Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet."
+        "text": i18n.get("description")
     });
     
     var button1 = settings.create({
