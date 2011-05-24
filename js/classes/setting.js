@@ -280,6 +280,23 @@
         // action -> change
         "Extends": Bundle,
         
+        "initialize": function (params) {
+            this.params = params;
+            this.params.searchString = "•" + this.params.tab + "•" + this.params.group + "•";
+            
+            this.createDOM();
+            this.setupDOM();
+            this.addEvents();
+            
+            if (this.params.name !== undefined) {
+                this.set((settings.get(this.params.name) || 0), true);
+            } else {
+                this.set(0, true);
+            }
+            
+            this.params.searchString = this.params.searchString.toLowerCase();
+        },
+        
         "createDOM": function () {
             this.bundle = new Element("div", {
                 "class": "setting bundle slider"
@@ -291,8 +308,7 @@
             
             this.element = new Element("input", {
                 "class": "setting element slider",
-                "type": "range",
-                "value": 0
+                "type": "range"
             });
             
             this.label = new Element("label", {
