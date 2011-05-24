@@ -291,7 +291,8 @@
             
             this.element = new Element("input", {
                 "class": "setting element slider",
-                "type": "range"
+                "type": "range",
+                "value": 0
             });
             
             this.label = new Element("label", {
