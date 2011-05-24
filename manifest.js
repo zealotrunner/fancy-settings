@@ -1,44 +1,38 @@
-// SAMPLE MANIFEST
+// SAMPLE
 this.manifest = {
     "name": "My Extension",
     "icon": "icon.png",
     "settings": [
         {
-            "tab": "Information",
-            "group": "Login",
+            "tab": i18n.get("information"),
+            "group": i18n.get("login"),
             "name": "textBox1",
             "type": "text",
-            "label": "Password:",
-            "text": "6 - 12 characters",
+            "label": i18n.get("password"),
+            "text": i18n.get("x-characters"),
             "masked": true
         },
         {
-            "tab": "Information",
-            "group": "Login",
+            "tab": i18n.get("information"),
+            "group": i18n.get("login"),
             "name": "description1",
             "type": "description",
-            "text": "This is a description. You can write any text inside of this.<br>\
-            Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut\
-            labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores\
-            et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem\
-            ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et\
-            dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum.\
-            Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet."
+            "text": i18n.get("description")
         },
         {
-            "tab": "Information",
-            "group": "Logout",
+            "tab": i18n.get("information"),
+            "group": i18n.get("logout"),
             "name": "checkbox1",
             "type": "checkbox",
-            "label": "Enable this"
+            "label": i18n.get("enable")
         },
         {
-            "tab": "Information",
-            "group": "Logout",
+            "tab": i18n.get("information"),
+            "group": i18n.get("logout"),
             "name": "button1",
             "type": "button",
-            "label": "Disconnect:",
-            "text": "Logout"
+            "label": i18n.get("disconnect"),
+            "text": i18n.get("logout")
         },
         {
             "tab": "Details",
@@ -46,9 +40,13 @@ this.manifest = {
             "name": "slider1",
             "type": "slider",
             "label": "Sound volume:",
-            "max": 100,
+            "max": 1,
             "min": 0,
-            "step": 1
+            "step": 0.01,
+            "display": true,
+            "displayModifier": function (value) {
+                return (value * 100).floor() + "%";
+            }
         },
         {
             "tab": "Details",
@@ -63,7 +61,8 @@ this.manifest = {
                 },
                 {
                     "value": "cold"
-                }
+                },
+                "frozen"
             ]
         },
         {
@@ -79,7 +78,8 @@ this.manifest = {
                 },
                 {
                     "value": "cold"
-                }
+                },
+                "frozen"
             ]
         },
         {
@@ -95,7 +95,8 @@ this.manifest = {
                 },
                 {
                     "value": "cold"
-                }
+                },
+                "frozen"
             ]
         }
     ]
