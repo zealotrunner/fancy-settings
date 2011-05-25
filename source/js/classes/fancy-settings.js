@@ -14,7 +14,7 @@
             $("icon").set("src", icon);
             $("settings-label").set("text", (i18n.get("settings") || "Settings"));
             $("search-label").set("text", (i18n.get("search") || "Search"));
-            $("search").set("placeholder", (i18n.get("search") + "..." || "Search..."));
+            $("search").set("placeholder", (i18n.get("search") || "Search") + "...");
             
             this.tab = new Tab($("tab-container"), $("content"));
             this.search = new Search($("search"), $("search-result-container"));
