@@ -412,6 +412,7 @@
             if (this.params.options === undefined) { return; }
             this.params.options.each((function (option) {
                 if (typeOf(option) === "string") { option = {"value": option}; }
+                if (typeOf(option) === "array") { option = {"value": option[0], "text": option[1]}; }
                 this.params.searchString += (option.text || option.value) + "•";
                 
                 (new Element("option", {
@@ -459,6 +460,7 @@
             if (this.params.options === undefined) { return; }
             this.params.options.each((function (option) {
                 if (typeOf(option) === "string") { option = {"value": option}; }
+                if (typeOf(option) === "array") { option = {"value": option[0], "text": option[1]}; }
                 this.params.searchString += (option.text || option.value) + "•";
                 
                 (new Element("option", {
@@ -499,6 +501,7 @@
                     container;
                 
                 if (typeOf(option) === "string") { option = {"value": option}; }
+                if (typeOf(option) === "array") { option = {"value": option[0], "text": option[1]}; }
                 this.params.searchString += (option.text || option.value) + "•";
                 
                 optionID = String.uniqueID();

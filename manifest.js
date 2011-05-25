@@ -62,7 +62,9 @@ this.manifest = {
                 {
                     "value": "cold"
                 },
-                "frozen"
+                ["freezing", "Freezing and gross"],
+                ["frozen"],
+                "nonexistent"
             ]
         },
         {
@@ -79,7 +81,9 @@ this.manifest = {
                 {
                     "value": "cold"
                 },
-                "frozen"
+                ["freezing", "Freezing and gross"],
+                ["frozen"],
+                "nonexistent"
             ]
         },
         {
@@ -96,7 +100,9 @@ this.manifest = {
                 {
                     "value": "cold"
                 },
-                "frozen"
+                ["freezing", "Freezing and gross"],
+                ["frozen"],
+                "nonexistent"
             ]
         }
     ]
