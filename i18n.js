@@ -23,6 +23,10 @@ this.i18n = {
         "en": "Login",
         "de": "Anmeldung"
     },
+    "username": {
+        "en": "Username:",
+        "de": "Benutzername:"
+    },
     "password": {
         "en": "Password:",
         "de": "Passwort:"
@@ -30,6 +34,10 @@ this.i18n = {
     "x-characters": {
         "en": "6 - 12 characters",
         "de": "6 - 12 Zeichen"
+    },
+    "x-characters-pw": {
+        "en": "10 - 18 characters",
+        "de": "10 - 18 Zeichen"
     },
     "description": {
         "en": "This is a description. You can write any text inside of this.<br>\

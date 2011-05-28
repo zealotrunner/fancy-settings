@@ -6,40 +6,48 @@ this.manifest = {
         {
             "tab": i18n.get("information"),
             "group": i18n.get("login"),
-            "name": "textBox1",
+            "name": "username",
+            "type": "text",
+            "label": i18n.get("username"),
+            "text": i18n.get("x-characters")
+        },
+        {
+            "tab": i18n.get("information"),
+            "group": i18n.get("login"),
+            "name": "password",
             "type": "text",
             "label": i18n.get("password"),
-            "text": i18n.get("x-characters"),
+            "text": i18n.get("x-characters-pw"),
             "masked": true
         },
         {
             "tab": i18n.get("information"),
             "group": i18n.get("login"),
-            "name": "description1",
+            "name": "myDescription",
             "type": "description",
             "text": i18n.get("description")
         },
         {
             "tab": i18n.get("information"),
             "group": i18n.get("logout"),
-            "name": "checkbox1",
+            "name": "myCheckbox",
             "type": "checkbox",
             "label": i18n.get("enable")
         },
         {
             "tab": i18n.get("information"),
             "group": i18n.get("logout"),
-            "name": "button1",
+            "name": "myButton",
             "type": "button",
             "label": i18n.get("disconnect"),
             "text": i18n.get("logout")
         },
         {
             "tab": "Details",
-            "group": "Volume",
-            "name": "slider1",
+            "group": "Sound",
+            "name": "noti_volume",
             "type": "slider",
-            "label": "Sound volume:",
+            "label": "Notification volume:",
             "max": 1,
             "min": 0,
             "step": 0.01,
@@ -50,60 +58,60 @@ this.manifest = {
         },
         {
             "tab": "Details",
+            "group": "Sound",
+            "name": "sound_volume",
+            "type": "slider",
+            "label": "Sound volume:",
+            "max": 100,
+            "min": 0,
+            "step": 1,
+            "display": true,
+            "displayModifier": function (value) {
+                return value + "%";
+            }
+        },
+        {
+            "tab": "Details",
             "group": "Food",
-            "name": "popupButton1",
+            "name": "myPopupButton",
             "type": "popupButton",
             "label": "Soup 1 should be:",
             "options": [
-                {
-                    "value": "hot",
-                    "text": "Hot and yummy"
-                },
-                {
-                    "value": "cold"
-                },
-                ["freezing", "Freezing and gross"],
-                ["frozen"],
-                "nonexistent"
+                ["hot", "Hot and yummy"],
+                ["cold"]
             ]
         },
         {
             "tab": "Details",
             "group": "Food",
-            "name": "listBox1",
+            "name": "myListBox",
             "type": "listBox",
             "label": "Soup 2 should be:",
             "options": [
-                {
-                    "value": "hot",
-                    "text": "Hot and yummy"
-                },
-                {
-                    "value": "cold"
-                },
-                ["freezing", "Freezing and gross"],
-                ["frozen"],
-                "nonexistent"
+                ["hot", "Hot and yummy"],
+                ["cold"]
             ]
         },
         {
             "tab": "Details",
             "group": "Food",
-            "name": "radioButtons1",
+            "name": "myRadioButtons",
             "type": "radioButtons",
             "label": "Soup 3 should be:",
             "options": [
-                {
-                    "value": "hot",
-                    "text": "Hot and yummy"
-                },
-                {
-                    "value": "cold"
-                },
-                ["freezing", "Freezing and gross"],
-                ["frozen"],
-                "nonexistent"
+                ["hot", "Hot and yummy"],
+                ["cold"]
             ]
         }
+    ],
+    "alignment": [
+        [
+            "username",
+            "password"
+        ],
+        [
+            "noti_volume",
+            "sound_volume"
+        ]
     ]
 };

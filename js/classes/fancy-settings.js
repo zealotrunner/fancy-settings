@@ -14,7 +14,7 @@
             $("icon").set("src", icon);
             $("settings-label").set("text", (i18n.get("settings") || "Settings"));
             $("search-label").set("text", (i18n.get("search") || "Search"));
-            $("search").set("placeholder", (i18n.get("search") + "..." || "Search..."));
+            $("search").set("placeholder", (i18n.get("search") || "Search") + "...");
             
             this.tab = new Tab($("tab-container"), $("content"));
             this.search = new Search($("search"), $("search-result-container"));
@@ -74,6 +74,49 @@
             this.search.add(bundle);
             
             return bundle;
+        },
+        
+        "align": function (settings) {
+            var types,
+                type,
+                maxWidth;
+            
+            types = [
+                "text",
+                "button",
+                "slider",
+                "popupButton"
+            ];
+            type = settings[0].params.type;
+            maxWidth = 0;
+            
+            if (!types.contains(type)) {
+                throw "invalidType";
+            }
+            
+            settings.each(function (setting) {
+                if (setting.params.type !== type) {
+                    throw "multipleTypes";
+                }
+                
+                var width = setting.label.offsetWidth;
+                if (width > maxWidth) {
+                    maxWidth = width;
+                }
+            });
+            
+            settings.each(function (setting) {
+                var width = setting.label.offsetWidth;
+                if (width < maxWidth) {
+                    if (type === "button" || type === "slider") {
+                        setting.element.setStyle("margin-left", (maxWidth - width + 2) + "px");
+                        setting.search.element.setStyle("margin-left", (maxWidth - width + 2) + "px");
+                    } else {
+                        setting.element.setStyle("margin-left", (maxWidth - width) + "px");
+                        setting.search.element.setStyle("margin-left", (maxWidth - width) + "px");
+                    }
+                }
+            });
         }
     });
     
@@ -90,6 +133,17 @@
                 settings.manifest[params.name] = output;
             }
         });
+        
+        if (manifest.alignment !== undefined) {
+            document.body.addClass("measuring");
+            manifest.alignment.each(function (group) {
+                group = group.map(function (name) {
+                    return settings.manifest[name];
+                });
+                settings.align(group);
+            });
+            document.body.removeClass("measuring");
+        }
         
         if (callback !== undefined) {
             callback(settings);
