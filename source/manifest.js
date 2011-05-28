@@ -76,10 +76,32 @@ this.manifest = {
             "name": "myPopupButton",
             "type": "popupButton",
             "label": "Soup 1 should be:",
-            "options": [
-                ["hot", "Hot and yummy"],
-                ["cold"]
-            ]
+            "options": {
+                "groups": [
+                    "group one", "group two",
+                ],
+                "values": [
+                    {
+                        "value": 1,
+                        "text": "foo",
+                        "group": "group one",
+                    },
+                    {
+                        "value": "two",
+                        "text": "bar",
+                        "group": 1,
+                    },
+                    {
+                        "value": "three",
+                        "text": "baz",
+                        "group": 2,
+                    },
+                    {
+                        "value": 4,
+                        "text": "no group!",
+                    }
+                ],
+            },
         },
         {
             "tab": "Details",
