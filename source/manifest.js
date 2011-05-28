@@ -77,7 +77,7 @@ this.manifest = {
             "type": "popupButton",
             "label": "Soup 1 should be:",
             "options": [
-                ["Hot and yummy", "hot"],
+                ["hot", "Hot and yummy"],
                 ["cold"]
             ]
         },
@@ -88,7 +88,7 @@ this.manifest = {
             "type": "listBox",
             "label": "Soup 2 should be:",
             "options": [
-                ["Hot and yummy", "hot"],
+                ["hot", "Hot and yummy"],
                 ["cold"]
             ]
         },
@@ -99,7 +99,7 @@ this.manifest = {
             "type": "radioButtons",
             "label": "Soup 3 should be:",
             "options": [
-                ["Hot and yummy", "hot"],
+                ["hot", "Hot and yummy"],
                 ["cold"]
             ]
         }
