@@ -78,28 +78,23 @@ this.manifest = {
             "label": "Soup 1 should be:",
             "options": {
                 "groups": [
-                    "group one", "group two",
+                    "Hot", "Cold",
                 ],
                 "values": [
                     {
-                        "value": 1,
-                        "text": "foo",
-                        "group": "group one",
+                        "value": "hot",
+                        "text": "Very hot",
+                        "group": "Hot",
                     },
                     {
-                        "value": "two",
-                        "text": "bar",
+                        "value": "Medium",
                         "group": 1,
                     },
                     {
-                        "value": "three",
-                        "text": "baz",
+                        "value": "Cold",
                         "group": 2,
                     },
-                    {
-                        "value": 4,
-                        "text": "no group!",
-                    }
+                    ["Non-existing"]
                 ],
             },
         },

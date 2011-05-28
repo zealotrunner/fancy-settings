@@ -411,6 +411,26 @@
             
             if (this.params.options === undefined) { return; }
 
+            // convert array syntax into object syntax for options
+            function arrayToObject(option) {
+                if (typeOf(option) == "array") {
+                    option = {
+                        "value": option[0],
+                        "text": option[1] || option[0],
+                    };
+                }
+                return option;
+            }
+
+            // convert arrays
+            if (typeOf(this.params.options) == "array") {
+                var values = [];
+                this.params.options.each((function(values, option) {
+                    values.push(arrayToObject(option));
+                }).bind(this, values));
+                this.params.options = { "values": values };
+            }
+
             var groups;
             if (this.params.options.groups !== undefined) {
                 groups = {};
@@ -424,6 +444,7 @@
 
             if (this.params.options.values !== undefined) {
                 this.params.options.values.each((function(groups, option) {
+                    option = arrayToObject(option);
                     this.params.searchString += (option.text || option.value) + "•";
 
                     // find the parent of this option - either a group or the main element
