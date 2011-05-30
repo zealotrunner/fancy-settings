@@ -410,14 +410,66 @@
             });
             
             if (this.params.options === undefined) { return; }
-            this.params.options.each((function (option) {
-                this.params.searchString += (option[1] || option[0]) + "•";
-                
-                (new Element("option", {
-                    "value": option[0],
-                    "text": option[1] || option[0]
-                })).inject(this.element);
-            }).bind(this));
+
+            // convert array syntax into object syntax for options
+            function arrayToObject(option) {
+                if (typeOf(option) == "array") {
+                    option = {
+                        "value": option[0],
+                        "text": option[1] || option[0],
+                    };
+                }
+                return option;
+            }
+
+            // convert arrays
+            if (typeOf(this.params.options) == "array") {
+                var values = [];
+                this.params.options.each((function(values, option) {
+                    values.push(arrayToObject(option));
+                }).bind(this, values));
+                this.params.options = { "values": values };
+            }
+
+            var groups;
+            if (this.params.options.groups !== undefined) {
+                groups = {};
+                this.params.options.groups.each((function (groups, group) {
+                    this.params.searchString += (group) + "•";
+                    groups[group] = (new Element("optgroup", {
+                        "label": group,
+                    }).inject(this.element));
+                }).bind(this, groups));
+            }
+
+            if (this.params.options.values !== undefined) {
+                this.params.options.values.each((function(groups, option) {
+                    option = arrayToObject(option);
+                    this.params.searchString += (option.text || option.value) + "•";
+
+                    // find the parent of this option - either a group or the main element
+                    var parent;
+                    if (option.group && this.params.options.groups) {
+                        if ((option.group - 1) in this.params.options.groups) {
+                            option.group = this.params.options.groups[option.group-1];
+                        }
+                        if (option.group in groups) {
+                            parent = groups[option.group];
+                        }
+                        else {
+                            parent = this.element;
+                        }
+                    }
+                    else {
+                        parent = this.element;
+                    }
+
+                    (new Element("option", {
+                        "value": option.value,
+                        "text": option.text || option.value,
+                    })).inject(parent);
+                }).bind(this, groups));
+            }
         },
         
         "setupDOM": function () {
