@@ -32,6 +32,10 @@
             this.setupDOM();
             this.addEvents();
             
+            if (this.params.id !== undefined) {
+                this.element.set("id", this.params.id);
+            }
+            
             if (this.params.name !== undefined) {
                 this.set(settings.get(this.params.name), true);
             }
@@ -117,6 +121,10 @@
             this.createDOM();
             this.setupDOM();
             this.addEvents();
+
+            if (this.params.id !== undefined) {
+                this.element.set("id", this.params.id);
+            }
             
             this.params.searchString = this.params.searchString.toLowerCase();
         },
@@ -340,7 +348,7 @@
             }
             
             this.element.inject(this.container);
-            if (this.params.display === true) {
+            if (this.params.display !== false) {
                 if (this.params.displayModifier !== undefined) {
                     this.display.set("text", this.params.displayModifier(0));
                 } else {
@@ -509,11 +517,11 @@
             
             if (this.params.options === undefined) { return; }
             this.params.options.each((function (option) {
-                this.params.searchString += (option[1] || option[0]) + "•";
+                this.params.searchString += (option.text || option.value) + "•";
                 
                 (new Element("option", {
-                    "value": option[0],
-                    "text": option[1] || option[0]
+                    "value": option.value,
+                    "text": option.text || option.value
                 })).inject(this.element);
             }).bind(this));
         },
@@ -523,6 +531,63 @@
         }
     });
     
+    Bundle.Textarea = new Class({
+        // label, text, value
+        // action -> change & keyup
+        "Extends": Bundle,
+        
+        "createDOM": function () {
+            this.bundle = new Element("div", {
+                "class": "setting bundle textarea"
+            });
+            
+            this.container = new Element("div", {
+                "class": "setting container textarea"
+            });
+            
+            this.element = new Element("textarea", {
+                "class": "setting element textarea"
+            });
+            
+            this.label = new Element("label", {
+                "class": "setting label textarea"
+            });
+        },
+        
+        "setupDOM": function () {
+            if (this.params.label !== undefined) {
+                this.label.set("html", this.params.label);
+                this.label.inject(this.container);
+                this.params.searchString += this.params.label + "•";
+            }
+            
+            if (this.params.text !== undefined) {
+                this.element.set("placeholder", this.params.text);
+                this.params.searchString += this.params.text + "•";
+            }
+
+            if (this.params.value !== undefined) {
+                this.element.appendText(this.params.text);
+            }
+            
+            this.element.inject(this.container);
+            this.container.inject(this.bundle);
+        },
+        
+        "addEvents": function () {
+            var change = (function (event) {
+                if (this.params.name !== undefined) {
+                    settings.set(this.params.name, this.get());
+                }
+                
+                this.fireEvent("action", this.get());
+            }).bind(this);
+            
+            this.element.addEvent("change", change);
+            this.element.addEvent("keyup", change);
+        }
+    });
+
     Bundle.RadioButtons = new Class({
         // label, options[{value, text}]
         // action -> change
@@ -548,7 +613,7 @@
                 var optionID,
                     container;
                 
-                this.params.searchString += (option[1] || option[0]) + "•";
+                this.params.searchString += (option.text || option.value) + "•";
                 
                 optionID = String.uniqueID();
                 container = (new Element("div", {
@@ -561,13 +626,13 @@
                     "name": settingID,
                     "class": "setting element radio-buttons",
                     "type": "radio",
-                    "value": option[0]
+                    "value": option.value
                 })).inject(container));
                 
                 this.labels.push((new Element("label", {
                     "class": "setting element-label radio-buttons",
                     "for": optionID,
-                    "text": option[1] || option[0]
+                    "text": option.text || option.value
                 })).inject(container));
             }).bind(this));
         },
@@ -625,6 +690,7 @@
                 "description": "Description",
                 "button": "Button",
                 "text": "Text",
+                "textarea": "Textarea",
                 "checkbox": "Checkbox",
                 "slider": "Slider",
                 "popupButton": "PopupButton",

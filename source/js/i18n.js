@@ -4,13 +4,13 @@
 // License: LGPL v2.1
 //
 (function () {
-    var lang = navigator.language.split("-")[0];
+    var lang = navigator.language;
     if (this.i18n === undefined) { this.i18n = {}; }
     this.i18n.get = function (value) {
         if (value === "lang") {
             return lang;
         }
-        
+
         if (this.hasOwnProperty(value)) {
             value = this[value];
             if (value.hasOwnProperty(lang)) {
